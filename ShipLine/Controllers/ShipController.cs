@@ -1,26 +1,36 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using ShipLine.Data;
+using ShipLine.Models;
+using ShipLine.Repository;
 
 namespace ShipLine.Controllers
 {
     public class ShipController : Controller
     {
+        private ShipRepository _shipRepository;
+        public ShipController(ApplicationDbContext dbContext)
+        {
+            _shipRepository = new ShipRepository(dbContext);
+        }
         // GET: ShipController
         public ActionResult Index()
         {
-            return View();
+            var list = _shipRepository.GetAllShips();
+            return View("Index", list);
         }
 
         // GET: ShipController/Details/5
-        public ActionResult Details(int id)
+        public ActionResult Details(Guid id)
         {
-            return View();
+            var model = _shipRepository.GetShipById(id);
+            return View("DetailsShip", model);
         }
 
         // GET: ShipController/Create
         public ActionResult Create()
         {
-            return View();
+            return View("CreateShip");
         }
 
         // POST: ShipController/Create
@@ -30,53 +40,70 @@ namespace ShipLine.Controllers
         {
             try
             {
-                return RedirectToAction(nameof(Index));
+                var model = new ShipModel();
+                var task = TryUpdateModelAsync(model);
+                task.Wait();
+                if (task.Result)
+                {
+                    _shipRepository.InsertShip(model);
+                }
+                return RedirectToAction("Index");
             }
             catch
             {
-                return View();
+                return View("CreateShip");
             }
         }
 
         // GET: ShipController/Edit/5
-        public ActionResult Edit(int id)
+        public ActionResult Edit(Guid id)
         {
-            return View();
+            var model = _shipRepository.GetShipById(id);
+            return View("EditShip", model);
         }
 
         // POST: ShipController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult Edit(Guid id, IFormCollection collection)
         {
             try
             {
-                return RedirectToAction(nameof(Index));
+                var model = new ShipModel();
+                var task = TryUpdateModelAsync(model);
+                task.Wait();
+                if (task.Result)
+                {
+                    _shipRepository.UpdateShip(model);
+                }
+                return RedirectToAction("Index");
             }
             catch
             {
-                return View();
+                return RedirectToAction("Edit", id);
             }
         }
 
         // GET: ShipController/Delete/5
-        public ActionResult Delete(int id)
+        public ActionResult Delete(Guid id)
         {
-            return View();
+            var model = _shipRepository.GetShipById(id);
+            return View("DeleteShip", model);
         }
 
         // POST: ShipController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public ActionResult Delete(Guid id, IFormCollection collection)
         {
             try
             {
+                _shipRepository.DeleteShip(id);
                 return RedirectToAction(nameof(Index));
             }
             catch
             {
-                return View();
+                return View("DeleteShip", id);
             }
         }
     }
