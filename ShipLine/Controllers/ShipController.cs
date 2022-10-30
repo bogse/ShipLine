@@ -103,7 +103,7 @@ namespace ShipLine.Controllers
             }
             catch
             {
-                return View("DeleteShip", id);
+                return RedirectToAction("Delete", id);
             }
         }
     }

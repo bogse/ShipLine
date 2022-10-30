@@ -42,7 +42,7 @@ namespace ShipLine.Repository
                 dbObject.QuantityTeq = model.QuantityTeq;
                 dbObject.ShipRequestDate = model.ShipRequestDate;
                 dbObject.NeedByDate = model.NeedByDate;
-                dbObject.Status = dbObject.Status;
+                dbObject.Status = model.Status;
             }
             return dbObject;
         }
@@ -76,7 +76,7 @@ namespace ShipLine.Repository
                 dbObject.QuantityTeq = model.QuantityTeq;
                 dbObject.ShipRequestDate = model.ShipRequestDate;
                 dbObject.NeedByDate = model.NeedByDate;
-                dbObject.Status = dbObject.Status;
+                dbObject.Status = model.Status;
                 _DBContext.SaveChanges();
             }
         }
