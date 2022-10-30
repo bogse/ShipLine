@@ -1,0 +1,62 @@
+﻿@model IEnumerable<ShipLine.Models.RouteModel>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+@if(Model != null)
+{
+    <table class="table">
+        <thead>
+            <tr>
+                @*<th>
+                    @Html.DisplayNameFor(model => model.RouteId)
+                </th>*@
+                <th>
+                    @Html.DisplayNameFor(model => model.SourcePortId)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.DestinationPortId)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Name)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    @*<td>
+                        @Html.DisplayFor(modelItem => item.RouteId)
+                    </td>*@
+                    <td>
+                        @Html.DisplayFor(modelItem => item.SourcePortId)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DestinationPortId)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", new {  id=item.RouteId  }) |
+                        @Html.ActionLink("Details", "Details", new {  id=item.RouteId  }) |
+                        @Html.ActionLink("Delete", "Delete", new {  id=item.RouteId  })
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>EmptyModel</p>
+}
