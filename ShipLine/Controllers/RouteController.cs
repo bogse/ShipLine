@@ -24,7 +24,7 @@ namespace ShipLine.Controllers
         // GET: RouteController/Details/5
         public ActionResult Details(Guid id)
         {
-            var model = _routeRepository.GetRouteModelById(id);
+            var model = _routeRepository.GetRouteById(id);
             return View("DetailsRoute", model);
         }
 
@@ -59,7 +59,7 @@ namespace ShipLine.Controllers
         // GET: RouteController/Edit/5
         public ActionResult Edit(Guid id)
         {
-            var model = _routeRepository.GetRouteModelById(id);
+            var model = _routeRepository.GetRouteById(id);
             return View("EditRoute", model);
         }
 
@@ -88,7 +88,7 @@ namespace ShipLine.Controllers
         // GET: RouteController/Delete/5
         public ActionResult Delete(Guid id)
         {
-            var model = _routeRepository.GetRouteModelById(id);
+            var model = _routeRepository.GetRouteById(id);
             return View("DeleteRoute", model);
         }
 

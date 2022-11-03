@@ -16,7 +16,7 @@ namespace ShipLine.Controllers
         // GET: ShipmentController
         public ActionResult Index()
         {
-            var list = _shipmentRepository.GetAllModels();
+            var list = _shipmentRepository.GetAllShipments();
             return View("Index", list);
         }
 

@@ -46,7 +46,7 @@ namespace ShipLine.Repository
             }
             return dbObject;
         }
-        public List<ShipmentModel> GetAllModels()
+        public List<ShipmentModel> GetAllShipments()
         {
             var list = new List<ShipmentModel>();
             foreach(var dbObject in _DBContext.Shipments)
