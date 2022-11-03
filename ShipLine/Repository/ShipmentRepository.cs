@@ -42,11 +42,11 @@ namespace ShipLine.Repository
                 dbObject.QuantityTeq = model.QuantityTeq;
                 dbObject.ShipRequestDate = model.ShipRequestDate;
                 dbObject.NeedByDate = model.NeedByDate;
-                dbObject.Status = dbObject.Status;
+                dbObject.Status = model.Status;
             }
             return dbObject;
         }
-        public List<ShipmentModel> GetAllModels()
+        public List<ShipmentModel> GetAllShipments()
         {
             var list = new List<ShipmentModel>();
             foreach(var dbObject in _DBContext.Shipments)
@@ -76,7 +76,7 @@ namespace ShipLine.Repository
                 dbObject.QuantityTeq = model.QuantityTeq;
                 dbObject.ShipRequestDate = model.ShipRequestDate;
                 dbObject.NeedByDate = model.NeedByDate;
-                dbObject.Status = dbObject.Status;
+                dbObject.Status = model.Status;
                 _DBContext.SaveChanges();
             }
         }

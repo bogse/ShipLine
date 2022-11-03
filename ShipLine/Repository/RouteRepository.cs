@@ -49,7 +49,7 @@ namespace ShipLine.Repository
             }
             return list;
         }
-        public RouteModel GetRouteModelById(Guid id)
+        public RouteModel GetRouteById(Guid id)
         {
             return MapDBObjectToModel(_DBContext.Routes.FirstOrDefault(x=> x.RouteId == id));
         }

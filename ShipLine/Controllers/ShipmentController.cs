@@ -1,26 +1,36 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using ShipLine.Data;
+using ShipLine.Models;
+using ShipLine.Repository;
 
 namespace ShipLine.Controllers
 {
     public class ShipmentController : Controller
     {
+        private ShipmentRepository _shipmentRepository;
+        public ShipmentController(ApplicationDbContext dbContext)
+        {
+            _shipmentRepository = new ShipmentRepository(dbContext);
+        }
         // GET: ShipmentController
         public ActionResult Index()
         {
-            return View();
+            var list = _shipmentRepository.GetAllShipments();
+            return View("Index", list);
         }
 
         // GET: ShipmentController/Details/5
-        public ActionResult Details(int id)
+        public ActionResult Details(Guid id)
         {
-            return View();
+            var model = _shipmentRepository.GetShipmentById(id);
+            return View("DetailsShipment", model);
         }
 
         // GET: ShipmentController/Create
         public ActionResult Create()
         {
-            return View();
+            return View("CreateShipment");
         }
 
         // POST: ShipmentController/Create
@@ -30,53 +40,70 @@ namespace ShipLine.Controllers
         {
             try
             {
-                return RedirectToAction(nameof(Index));
+                var model = new ShipmentModel();
+                var task = TryUpdateModelAsync(model);
+                task.Wait();
+                if (task.Result)
+                {
+                    _shipmentRepository.InsertShipment(model);
+                }
+                return RedirectToAction("Index");
             }
             catch
             {
-                return View();
+                return View("CreateShipment");
             }
         }
 
         // GET: ShipmentController/Edit/5
-        public ActionResult Edit(int id)
+        public ActionResult Edit(Guid id)
         {
-            return View();
+            var model = _shipmentRepository.GetShipmentById(id);
+            return View("EditShipment", model);
         }
 
         // POST: ShipmentController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult Edit(Guid id, IFormCollection collection)
         {
             try
             {
-                return RedirectToAction(nameof(Index));
+                var model = new ShipmentModel();
+                var task = TryUpdateModelAsync(model);
+                task.Wait();
+                if (task.Result)
+                {
+                    _shipmentRepository.UpdateShipment(model);
+                }
+                return RedirectToAction("Index");
             }
             catch
             {
-                return View();
+                return RedirectToAction("Edit", id);
             }
         }
 
         // GET: ShipmentController/Delete/5
-        public ActionResult Delete(int id)
+        public ActionResult Delete(Guid id)
         {
-            return View();
+            var model = _shipmentRepository.GetShipmentById(id);
+            return View("DeleteShipment", model);
         }
 
         // POST: ShipmentController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public ActionResult Delete(Guid id, IFormCollection collection)
         {
             try
             {
+                _shipmentRepository.DeleteShipment(id);
                 return RedirectToAction(nameof(Index));
             }
             catch
             {
-                return View();
+                return RedirectToAction("Delete", id);
             }
         }
     }
