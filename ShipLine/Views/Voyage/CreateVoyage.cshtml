@@ -19,13 +19,13 @@
                 <span asp-validation-for="VoyageId" class="text-danger"></span>
             </div>*@
             <div class="form-group">
-                <label asp-for="ShipId" class="control-label"></label>
-                <input asp-for="ShipId" class="form-control" />
+                <label asp-for="ShipId" class="control-label">Ship Name</label>
+                @Html.DropDownList("ShipId", new SelectList(ViewBag.ShipList, "Value", "Text"), "", new {@class= "form-control"})
                 <span asp-validation-for="ShipId" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="RouteId" class="control-label"></label>
-                <input asp-for="RouteId" class="form-control" />
+                @Html.DropDownList("RouteId", new SelectList(ViewBag.RouteList, "Value", "Text"), "", new {@class = "form-control"})
                 <span asp-validation-for="RouteId" class="text-danger"></span>
             </div>
             <div class="form-group">

@@ -1,35 +1,57 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using ShipLine.Data;
 using ShipLine.Models;
 using ShipLine.Repository;
+using ShipLine.ViewModel;
 
 namespace ShipLine.Controllers
 {
     public class VoyageController : Controller
     {
         private VoyageRepository _voyageRepository;
+        private ShipRepository _shipRepository;
+        private RouteRepository _routeRepository;
         public VoyageController(ApplicationDbContext dbContext)
         {
             _voyageRepository = new VoyageRepository(dbContext);
+            _shipRepository = new ShipRepository(dbContext);
+            _routeRepository = new RouteRepository(dbContext);
         }
         // GET: VoyageController
         public ActionResult Index()
         {
             var list = _voyageRepository.GetAllVoyages();
-            return View("Index", list);
+            var viewModelList = new List<VoyageViewModel>();
+            foreach(var voyage in list)
+            {
+                viewModelList.Add(new VoyageViewModel(voyage, _shipRepository, _routeRepository));
+            }
+
+            return View("Index", viewModelList);
         }
 
         // GET: VoyageController/Details/5
         public ActionResult Details(Guid id)
         {
             var model = _voyageRepository.GetVoyageById(id);
-            return View("DetailsVoyage", model);
+            var viewModel = new VoyageViewModel(model, _shipRepository, _routeRepository);
+
+            return View("DetailsVoyage", viewModel);
         }
 
         // GET: VoyageController/Create
         public ActionResult Create()
         {
+            var ships = _shipRepository.GetAllShips();
+            var shipList = ships.Select(x => new SelectListItem(x.Name, x.ShipId.ToString()));
+            ViewBag.ShipList = shipList;
+
+            var routes = _routeRepository.GetAllRoutes();
+            var routeList = routes.Select(x => new SelectListItem(x.Name, x.RouteId.ToString()));
+            ViewBag.RouteList = routeList;
+
             return View("CreateVoyage");
         }
 
@@ -59,6 +81,15 @@ namespace ShipLine.Controllers
         public ActionResult Edit(Guid id)
         {
             var model = _voyageRepository.GetVoyageById(id);
+
+            var ships = _shipRepository.GetAllShips();
+            var shipList = ships.Select(x=> new SelectListItem(x.Name, x.ShipId.ToString()));
+            ViewBag.ShipList = shipList;
+
+            var routes = _routeRepository.GetAllRoutes();
+            var routeList = routes.Select(x => new SelectListItem(x.Name, x.RouteId.ToString()));
+            ViewBag.RouteList = routeList;
+
             return View("EditVoyage", model);
         }
 
@@ -88,7 +119,9 @@ namespace ShipLine.Controllers
         public ActionResult Delete(Guid id)
         {
             var model = _voyageRepository.GetVoyageById(id);
-            return View("DeleteVoyage", model);
+            var viewModel = new VoyageViewModel(model, _shipRepository, _routeRepository);
+
+            return View("DeleteVoyage", viewModel);
         }
 
         // POST: VoyageController/Delete/5

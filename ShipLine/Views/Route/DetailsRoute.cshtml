@@ -1,4 +1,4 @@
-﻿@model ShipLine.Models.RouteModel
+﻿@model ShipLine.ViewModel.RouteViewModel
 
 @{
     ViewData["Title"] = "DetailsRoute";
@@ -8,15 +8,15 @@
 <h1>DetailsRoute</h1>
 
 <div>
-    <h4>RouteModel</h4>
+    <h4>RouteViewModel</h4>
     <hr />
     <dl class="row">
-        @*<dt class = "col-sm-2">
+@*        <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.RouteId)
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.RouteId)
-        </dd>*@
+        </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.SourcePortId)
         </dt>
@@ -28,12 +28,24 @@
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.DestinationPortId)
-        </dd>
+        </dd>*@
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Name)
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.Name)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.SourcePortName)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.SourcePortName)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.DestinationPortName)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.DestinationPortName)
         </dd>
     </dl>
 </div>

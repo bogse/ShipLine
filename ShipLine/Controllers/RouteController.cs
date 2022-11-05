@@ -1,36 +1,54 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using NuGet.Protocol.Core.Types;
 using ShipLine.Data;
 using ShipLine.Models;
 using ShipLine.Repository;
+using ShipLine.ViewModel;
 
 namespace ShipLine.Controllers
 {
     public class RouteController : Controller
     {
         private RouteRepository _routeRepository;
+        private PortRepository _portRepository;
+
         public RouteController(ApplicationDbContext dbContext)
         {
             _routeRepository = new RouteRepository(dbContext);
+            _portRepository = new PortRepository(dbContext);
         }
 
         // GET: RouteController
         public ActionResult Index()
         {
             var list = _routeRepository.GetAllRoutes();
-            return View(list);
+            var viewModelList = new List<RouteViewModel>();
+            foreach (var route in list)
+            {
+                viewModelList.Add(new RouteViewModel(route, _portRepository));
+            }
+
+            return View(viewModelList);
         }
 
         // GET: RouteController/Details/5
         public ActionResult Details(Guid id)
         {
             var model = _routeRepository.GetRouteById(id);
-            return View("DetailsRoute", model);
+            var viewModel = new RouteViewModel(model, _portRepository);
+
+            return View("DetailsRoute", viewModel);
         }
 
         // GET: RouteController/Create
         public ActionResult Create()
         {
+            var list = _portRepository.GetAllPorts();
+            var portList = list.Select(x => new SelectListItem(x.Name, x.PortId.ToString()));
+            ViewBag.PortList = portList;
+
             return View("CreateRoute");
         }
 
@@ -60,6 +78,10 @@ namespace ShipLine.Controllers
         public ActionResult Edit(Guid id)
         {
             var model = _routeRepository.GetRouteById(id);
+            var list = _portRepository.GetAllPorts();
+            var portList = list.Select(x => new SelectListItem(x.Name, x.PortId.ToString()));
+            ViewBag.PortList = portList;
+
             return View("EditRoute", model);
         }
 
@@ -89,7 +111,9 @@ namespace ShipLine.Controllers
         public ActionResult Delete(Guid id)
         {
             var model = _routeRepository.GetRouteById(id);
-            return View("DeleteRoute", model);
+            var viewModel = new RouteViewModel(model, _portRepository);
+
+            return View("DeleteRoute", viewModel);
         }
 
         // POST: RouteController/Delete/5
