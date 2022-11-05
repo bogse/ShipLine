@@ -76,6 +76,11 @@ namespace ShipLine.Repository
             var dbObject = _DBContext.Routes.FirstOrDefault(x=> x.RouteId == id);
             if (dbObject != null)
             {
+                var voyages = _DBContext.Voyages.Where(x => x.RouteId == dbObject.RouteId);
+                foreach(var voyage in voyages)
+                {
+                    _DBContext.Voyages.Remove(voyage);
+                }
                 _DBContext.Routes.Remove(dbObject);
                 _DBContext.SaveChanges();
             }

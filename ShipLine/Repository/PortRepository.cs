@@ -77,6 +77,11 @@ namespace ShipLine.Repository
             var dbObject = _DBContext.Ports.FirstOrDefault(x => x.PortId == id);
             if(dbObject != null)
             {
+                var routes = _DBContext.Routes.Where(x => x.SourcePortId == dbObject.PortId || x.DestinationPortId == dbObject.PortId);
+                foreach (var route in routes)
+                {
+                    _DBContext.Routes.Remove(route);
+                }
                 _DBContext.Ports.Remove(dbObject);
                 _DBContext.SaveChanges();
             }
