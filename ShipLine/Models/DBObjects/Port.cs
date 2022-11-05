@@ -9,6 +9,8 @@ namespace ShipLine.Models.DBObjects
         {
             RouteDestinationPorts = new HashSet<Route>();
             RouteSourcePorts = new HashSet<Route>();
+            ShipmentDestinationPorts = new HashSet<Shipment>();
+            ShipmentSourcePorts = new HashSet<Shipment>();
         }
 
         public Guid PortId { get; set; }
@@ -17,5 +19,7 @@ namespace ShipLine.Models.DBObjects
 
         public virtual ICollection<Route> RouteDestinationPorts { get; set; }
         public virtual ICollection<Route> RouteSourcePorts { get; set; }
+        public virtual ICollection<Shipment> ShipmentDestinationPorts { get; set; }
+        public virtual ICollection<Shipment> ShipmentSourcePorts { get; set; }
     }
 }

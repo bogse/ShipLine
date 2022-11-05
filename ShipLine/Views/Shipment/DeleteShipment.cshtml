@@ -18,6 +18,12 @@
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.ShipmentId)
         </dd>*@
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ShipmentNumber)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ShipmentNumber)
+        </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.CustomerId)
         </dt>
@@ -47,11 +53,23 @@
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.NeedByDate)
-        </dd>
+        </dd>        
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Status)
+            @Html.DisplayNameFor(model => model.DestinationPortId)
         </dt>
         <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.DestinationPortId)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.SourcePortId)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.SourcePortId)
+        </dd>       
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Status)
+        </dt>
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Status)
         </dd>
     </dl>

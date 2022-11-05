@@ -16,8 +16,11 @@
         <thead>
             <tr>
                 @*<th>
-            @Html.DisplayNameFor(model => model.ShipmentId)
-            </th>*@
+                    @Html.DisplayNameFor(model => model.ShipmentId)
+                </th>*@
+                <th>
+                    @Html.DisplayNameFor(model => model.ShipmentNumber)
+                </th>
                 <th>
                     @Html.DisplayNameFor(model => model.CustomerId)
                 </th>
@@ -32,6 +35,12 @@
                 </th>
                 <th>
                     @Html.DisplayNameFor(model => model.NeedByDate)
+                </th>            
+                <th>
+                    @Html.DisplayNameFor(model => model.DestinationPortId)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.SourcePortId)
                 </th>
                 <th>
                     @Html.DisplayNameFor(model => model.Status)
@@ -40,37 +49,46 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (var item in Model)
-            {
-                <tr>
-                    @*<td>
-                        @Html.DisplayFor(modelItem => item.ShipmentId)
-                    </td>*@
-                    <td>
-                        @Html.DisplayFor(modelItem => item.CustomerId)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.CargoContents)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.QuantityTeq)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.ShipRequestDate)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.NeedByDate)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Status)
-                    </td>
-                    <td>
-                        @Html.ActionLink("Edit", "Edit", new {  id=item.ShipmentId  }) |
-                        @Html.ActionLink("Details", "Details", new {  id=item.ShipmentId  }) |
-                        @Html.ActionLink("Delete", "Delete", new {  id=item.ShipmentId  })
-                    </td>
-                </tr>
-            }
+    @foreach (var item in Model) {
+            <tr>
+                @*<td>
+                    @Html.DisplayFor(modelItem => item.ShipmentId)
+                </td>*@
+                <td>
+                    @Html.DisplayFor(modelItem => item.ShipmentNumber)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CustomerId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CargoContents)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.QuantityTeq)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ShipRequestDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NeedByDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Status)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DestinationPortId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SourcePortId)
+                </td>
+            
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new {  id=item.ShipmentId  }) |
+                    @Html.ActionLink("Details", "Details", new {  id=item.ShipmentId  }) |
+                    @Html.ActionLink("Delete", "Delete", new {  id=item.ShipmentId  })
+                </td>
+            </tr>
+    }
         </tbody>
     </table>
 }

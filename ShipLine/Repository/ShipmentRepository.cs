@@ -28,6 +28,9 @@ namespace ShipLine.Repository
                 model.ShipRequestDate = dbObject.ShipRequestDate;
                 model.NeedByDate = dbObject.NeedByDate;
                 model.Status = dbObject.Status;
+                model.DestinationPortId = dbObject.DestinationPortId;
+                model.SourcePortId = dbObject.SourcePortId;
+                model.ShipmentNumber = dbObject.ShipmentNumber;
             }
             return model;
         }
@@ -43,6 +46,9 @@ namespace ShipLine.Repository
                 dbObject.ShipRequestDate = model.ShipRequestDate;
                 dbObject.NeedByDate = model.NeedByDate;
                 dbObject.Status = model.Status;
+                dbObject.DestinationPortId = model.DestinationPortId;
+                dbObject.SourcePortId = model.SourcePortId;
+                dbObject.ShipmentNumber = dbObject.ShipmentNumber;
             }
             return dbObject;
         }
@@ -77,6 +83,9 @@ namespace ShipLine.Repository
                 dbObject.ShipRequestDate = model.ShipRequestDate;
                 dbObject.NeedByDate = model.NeedByDate;
                 dbObject.Status = model.Status;
+                dbObject.DestinationPortId = model.DestinationPortId;
+                dbObject.SourcePortId = model.SourcePortId;
+                dbObject.ShipmentNumber = model.ShipmentNumber;
                 _DBContext.SaveChanges();
             }
         }

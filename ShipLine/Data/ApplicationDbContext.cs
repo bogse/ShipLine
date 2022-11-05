@@ -24,6 +24,7 @@ namespace ShipLine.Data
         public virtual DbSet<AspNetUserClaim> AspNetUserClaims { get; set; } = null!;
         public virtual DbSet<AspNetUserLogin> AspNetUserLogins { get; set; } = null!;
         public virtual DbSet<AspNetUserToken> AspNetUserTokens { get; set; } = null!;
+        public virtual DbSet<Client> Clients { get; set; } = null!;
         public virtual DbSet<Port> Ports { get; set; } = null!;
         public virtual DbSet<Route> Routes { get; set; } = null!;
         public virtual DbSet<Ship> Ships { get; set; } = null!;
@@ -131,6 +132,19 @@ namespace ShipLine.Data
                     .HasForeignKey(d => d.UserId);
             });
 
+            modelBuilder.Entity<Client>(entity =>
+            {
+                entity.ToTable("Client");
+
+                entity.Property(e => e.ClientId).ValueGeneratedNever();
+
+                entity.Property(e => e.ClientName).HasMaxLength(50);
+
+                entity.Property(e => e.Email).HasMaxLength(50);
+
+                entity.Property(e => e.Phone).HasMaxLength(15);
+            });
+
             modelBuilder.Entity<Port>(entity =>
             {
                 entity.ToTable("Port");
@@ -201,6 +215,24 @@ namespace ShipLine.Data
                 entity.Property(e => e.ShipRequestDate).HasColumnType("datetime");
 
                 entity.Property(e => e.Status).HasMaxLength(50);
+
+                entity.HasOne(d => d.Customer)
+                    .WithMany(p => p.Shipments)
+                    .HasForeignKey(d => d.CustomerId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Shipment_Client");
+
+                entity.HasOne(d => d.DestinationPort)
+                    .WithMany(p => p.ShipmentDestinationPorts)
+                    .HasForeignKey(d => d.DestinationPortId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_ShipmentDestination_Port");
+
+                entity.HasOne(d => d.SourcePort)
+                    .WithMany(p => p.ShipmentSourcePorts)
+                    .HasForeignKey(d => d.SourcePortId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_ShipmentSourcePort_Port");
             });
 
             modelBuilder.Entity<Voyage>(entity =>
