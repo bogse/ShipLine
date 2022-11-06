@@ -76,6 +76,11 @@ namespace ShipLine.Repository
             var dbObject = _DBContext.Clients.FirstOrDefault(x => x.ClientId == id);
             if (dbObject != null)
             {
+                var shipments = _DBContext.Shipments.Where(x => x.CustomerId == dbObject.ClientId);
+                foreach (var shipment in shipments)
+                {
+                    _DBContext.Shipments.Remove(shipment);
+                }
                 _DBContext.Clients.Remove(dbObject);
                 _DBContext.SaveChanges();
             }

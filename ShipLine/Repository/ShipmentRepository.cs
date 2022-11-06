@@ -92,8 +92,14 @@ namespace ShipLine.Repository
         public void DeleteShipment(Guid id)
         {
             var dbObject = _DBContext.Shipments.FirstOrDefault(x=> x.ShipmentId == id);
+
             if(dbObject != null)
             {
+                var voyageShipments = _DBContext.VoyageShipments.Where(x => x.ShipmentId == dbObject.ShipmentId);
+                foreach (var voyageShipment in voyageShipments)
+                {
+                    _DBContext.VoyageShipments.Remove(voyageShipment);
+                }
                 _DBContext.Shipments.Remove(dbObject);
                 _DBContext.SaveChanges();
             }
