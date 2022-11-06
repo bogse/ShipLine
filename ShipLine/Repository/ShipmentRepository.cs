@@ -48,7 +48,7 @@ namespace ShipLine.Repository
                 dbObject.Status = model.Status;
                 dbObject.DestinationPortId = model.DestinationPortId;
                 dbObject.SourcePortId = model.SourcePortId;
-                dbObject.ShipmentNumber = dbObject.ShipmentNumber;
+                dbObject.ShipmentNumber = model.ShipmentNumber;
             }
             return dbObject;
         }

@@ -214,6 +214,8 @@ namespace ShipLine.Data
 
                 entity.Property(e => e.ShipRequestDate).HasColumnType("datetime");
 
+                entity.Property(e => e.ShipmentNumber).ValueGeneratedOnAdd();
+
                 entity.Property(e => e.Status).HasMaxLength(50);
 
                 entity.HasOne(d => d.Customer)
