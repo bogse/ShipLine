@@ -19,15 +19,16 @@
                 <span asp-validation-for="VoyageShipmentId" class="text-danger"></span>
             </div>*@
             <div class="form-group">
-                <label asp-for="ShipmentId" class="control-label"></label>
-                <input asp-for="ShipmentId" class="form-control" />
-                <span asp-validation-for="ShipmentId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="VoyageId" class="control-label"></label>
-                <input asp-for="VoyageId" class="form-control" />
+                <label asp-for="VoyageId" class="control-label">VoyageNumber</label>
+                @Html.DropDownList("VoyageId", new SelectList(ViewBag.VoyageList, "Value", "Text"), "", new {@class= "form-control"})
                 <span asp-validation-for="VoyageId" class="text-danger"></span>
             </div>
+            <div class="form-group">
+                <label asp-for="ShipmentId" class="control-label">ShipmentNumber</label>
+                @Html.DropDownList("ShipmentId", new SelectList(ViewBag.ShipmentList, "Value", "Text"), "", new {@class= "form-control"})
+                <span asp-validation-for="ShipmentId" class="text-danger"></span>
+            </div>
+
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>

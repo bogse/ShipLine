@@ -1,35 +1,56 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using ShipLine.Data;
 using ShipLine.Models;
 using ShipLine.Repository;
+using ShipLine.ViewModel;
 
 namespace ShipLine.Controllers
 {
     public class VoyageShipmentController : Controller
     {
         private VoyageShipmentRepository _voyageShipmentRepository;
+        private ShipmentRepository _shipmentRepository;
+        private VoyageRepository _voyageRepository;
         public VoyageShipmentController(ApplicationDbContext dbContext)
         {
             _voyageShipmentRepository = new VoyageShipmentRepository(dbContext);
+            _shipmentRepository = new ShipmentRepository(dbContext);
+            _voyageRepository = new VoyageRepository(dbContext);
         }
         // GET: VoyageShipmentController
         public ActionResult Index()
         {
             var list = _voyageShipmentRepository.GetAllVoyageShipments();
-            return View("Index", list);
+            var viewModelList = new List<VoyageShipmentViewModel>();
+            foreach (var voyageShipment in list)
+            {
+                viewModelList.Add(new VoyageShipmentViewModel(voyageShipment, _shipmentRepository, _voyageRepository));
+            }
+            return View("Index", viewModelList);
         }
 
         // GET: VoyageShipmentController/Details/5
         public ActionResult Details(Guid id)
         {
             var model = _voyageShipmentRepository.GetVoyageShipmentById(id);
-            return View("DetailsVoyageShipment", model);
+            var viewModel = new VoyageShipmentViewModel(model, _shipmentRepository, _voyageRepository);
+
+            return View("DetailsVoyageShipment", viewModel);
         }
 
         // GET: VoyageShipmentController/Create
         public ActionResult Create()
         {
+            var shipments = _shipmentRepository.GetAllShipments();
+            var shipmentList = shipments.Select(x => new SelectListItem(x.ShipmentNumber.ToString(), x.ShipmentId.ToString()));
+            ViewBag.ShipmentList = shipmentList;
+
+            var voyages = _voyageRepository.GetAllVoyages();
+            var voyageList = voyages.Select(x => new SelectListItem(x.VoyageNumber.ToString(), x.VoyageId.ToString()));
+            ViewBag.VoyageList = voyageList;
+
             return View("CreateVoyageShipment");
         }
 
@@ -59,6 +80,15 @@ namespace ShipLine.Controllers
         public ActionResult Edit(Guid id)
         {
             var model = _voyageShipmentRepository.GetVoyageShipmentById(id);
+
+            var shipments = _shipmentRepository.GetAllShipments();
+            var shipmentList = shipments.Select(x => new SelectListItem(x.ShipmentNumber.ToString(), x.ShipmentId.ToString()));
+            ViewBag.ShipmentList = shipmentList;
+
+            var voyages = _voyageRepository.GetAllVoyages();
+            var voyageList = voyages.Select(x => new SelectListItem(x.VoyageNumber.ToString(), x.VoyageId.ToString()));
+            ViewBag.VoyageList = voyageList;
+
             return View("EditVoyageShipment", model);
         }
 
@@ -88,7 +118,9 @@ namespace ShipLine.Controllers
         public ActionResult Delete(Guid id)
         {
             var model = _voyageShipmentRepository.GetVoyageShipmentById(id);
-            return View("DeleteVoyageShipment", model);
+            var viewModel = new VoyageShipmentViewModel(model, _shipmentRepository, _voyageRepository);
+
+            return View("DeleteVoyageShipment", viewModel);
         }
 
         // POST: VoyageShipmentController/Delete/5

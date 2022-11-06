@@ -1,4 +1,4 @@
-﻿@model ShipLine.Models.VoyageShipmentModel
+﻿@model ShipLine.ViewModel.VoyageShipmentViewModel
 
 @{
     ViewData["Title"] = "DetailsVoyageShipment";
@@ -8,7 +8,7 @@
 <h1>DetailsVoyageShipment</h1>
 
 <div>
-    <h4>VoyageShipmentModel</h4>
+    <h4>VoyageShipmentViewModel</h4>
     <hr />
     <dl class="row">
         @*<dt class = "col-sm-2">
@@ -16,7 +16,7 @@
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.VoyageShipmentId)
-        </dd>*@
+        </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.ShipmentId)
         </dt>
@@ -28,7 +28,20 @@
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.VoyageId)
+        </dd>*@
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.VoyageNumber)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.VoyageNumber)
         </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.ShipmentNumber)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.ShipmentNumber)
+        </dd>
+
     </dl>
 </div>
 <div>
