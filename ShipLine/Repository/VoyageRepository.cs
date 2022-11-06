@@ -28,6 +28,7 @@ namespace ShipLine.Repository
                 model.EndDate = dbObject.EndDate;
                 model.VoyageQuantity = dbObject.VoyageQuantity;
                 model.CostPerTeq = dbObject.CostPerTeq;
+                model.VoyageNumber = dbObject.VoyageNumber;
             }
             return model;
         }
@@ -43,6 +44,7 @@ namespace ShipLine.Repository
                 dbObject.EndDate = model.EndDate;
                 dbObject.VoyageQuantity = model.VoyageQuantity;
                 dbObject.CostPerTeq = model.CostPerTeq;
+                dbObject.VoyageNumber = model.VoyageNumber;
             }
             return dbObject;
         }
@@ -77,6 +79,7 @@ namespace ShipLine.Repository
                 dbObject.EndDate = model.EndDate;
                 dbObject.VoyageQuantity = model.VoyageQuantity;
                 dbObject.CostPerTeq = model.CostPerTeq;
+                dbObject.VoyageNumber = model.VoyageNumber;
                 _DBContext.SaveChanges();
             }
         }

@@ -25,6 +25,9 @@
             @Html.DisplayNameFor(model => model.RouteId)
             </th>*@
                 <th>
+                    @Html.DisplayNameFor(model => model.VoyageNumber)
+                </th>
+                <th>
                     @Html.DisplayNameFor(model => model.ShipName)
                 </th>
                 <th>
@@ -42,6 +45,7 @@
                 <th>
                     @Html.DisplayNameFor(model => model.CostPerTeq)
                 </th>
+
                 <th></th>
             </tr>
         </thead>
@@ -49,15 +53,18 @@
             @foreach (var item in Model)
             {
                 <tr>
-                    @*            <td>
-            @Html.DisplayFor(modelItem => item.VoyageId)
-            </td>
-            <td>
-            @Html.DisplayFor(modelItem => item.ShipId)
-            </td>
-            <td>
-            @Html.DisplayFor(modelItem => item.RouteId)
-            </td>*@
+                    @*<td>
+                        @Html.DisplayFor(modelItem => item.VoyageId)
+                    </td>
+                    <td>
+                    @Html.DisplayFor(modelItem => item.ShipId)
+                    </td>
+                    <td>
+                    @Html.DisplayFor(modelItem => item.RouteId)
+                    </td>*@
+                    <td>
+                        @Html.DisplayFor(modelItem => item.VoyageNumber)
+                    </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.ShipName)
                     </td>

@@ -12,6 +12,7 @@ namespace ShipLine.ViewModel
         public DateTime EndDate { get; set; }
         public int VoyageQuantity { get; set; }
         public int CostPerTeq { get; set; }
+        public int VoyageNumber { get; set; }
         public string ShipName { get; set; }
         public string RouteName { get; set; }
 
@@ -24,6 +25,7 @@ namespace ShipLine.ViewModel
             this.EndDate = model.EndDate;
             this.VoyageQuantity = model.VoyageQuantity;
             this.CostPerTeq = model.CostPerTeq;
+            this.VoyageNumber = model.VoyageNumber;
             var ship = shipRepository.GetShipById(model.ShipId);
             this.ShipName = ship.Name;
             var route = routeRepository.GetRouteById(model.RouteId);

@@ -255,6 +255,8 @@ namespace ShipLine.Data
 
                 entity.Property(e => e.StartDate).HasColumnType("datetime");
 
+                entity.Property(e => e.VoyageNumber).ValueGeneratedOnAdd();
+
                 entity.HasOne(d => d.Route)
                     .WithMany(p => p.Voyages)
                     .HasForeignKey(d => d.RouteId)

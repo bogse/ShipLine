@@ -9,5 +9,6 @@
         public DateTime EndDate { get; set; }
         public int VoyageQuantity { get; set; }
         public int CostPerTeq { get; set; }
+        public int VoyageNumber { get; set; }
     }
 }
