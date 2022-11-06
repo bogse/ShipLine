@@ -1,4 +1,4 @@
-﻿@model ShipLine.Models.ShipmentModel
+﻿@model ShipLine.ViewModel.ShipmentViewModel
 
 @{
     ViewData["Title"] = "DetailsShipment";
@@ -8,7 +8,7 @@
 <h1>DetailsShipment</h1>
 
 <div>
-    <h4>ShipmentModel</h4>
+    <h4>ShipmentViewModel</h4>
     <hr />
     <dl class="row">
         @*<dt class = "col-sm-2">
@@ -16,12 +16,36 @@
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.ShipmentId)
-        </dd>*@
+        </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.CustomerId)
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.CustomerId)
+        </dd>*@
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ShipmentNumber)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ShipmentNumber)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.CustomerName)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.CustomerName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.DestinationPort)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.DestinationPort)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.SourcePort)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.SourcePort)
         </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.CargoContents)
@@ -53,6 +77,18 @@
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.Status)
         </dd>
+        @*<dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.DestinationPortId)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.DestinationPortId)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.SourcePortId)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.SourcePortId)
+        </dd>*@
     </dl>
 </div>
 <div>

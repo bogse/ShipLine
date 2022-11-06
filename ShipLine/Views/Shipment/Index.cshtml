@@ -1,4 +1,4 @@
-﻿@model IEnumerable<ShipLine.Models.ShipmentModel>
+﻿@model IEnumerable<ShipLine.ViewModel.ShipmentViewModel>
 
 @{
     ViewData["Title"] = "Index";
@@ -10,16 +10,29 @@
 <p>
     <a asp-action="Create">Create New</a>
 </p>
-@if(Model != null)
+
+@if (Model != null)
 {
     <table class="table">
         <thead>
             <tr>
                 @*<th>
-            @Html.DisplayNameFor(model => model.ShipmentId)
-            </th>*@
+                    @Html.DisplayNameFor(model => model.ShipmentId)
+                </th>
                 <th>
                     @Html.DisplayNameFor(model => model.CustomerId)
+                </th>*@
+                <th>
+                    @Html.DisplayNameFor(model => model.ShipmentNumber)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.CustomerName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.DestinationPort)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.SourcePort)
                 </th>
                 <th>
                     @Html.DisplayNameFor(model => model.CargoContents)
@@ -36,6 +49,12 @@
                 <th>
                     @Html.DisplayNameFor(model => model.Status)
                 </th>
+                @*<th>
+                    @Html.DisplayNameFor(model => model.DestinationPortId)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.SourcePortId)
+                </th>*@
                 <th></th>
             </tr>
         </thead>
@@ -45,9 +64,21 @@
                 <tr>
                     @*<td>
                         @Html.DisplayFor(modelItem => item.ShipmentId)
-                    </td>*@
+                    </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.CustomerId)
+                    </td>*@
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ShipmentNumber)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CustomerName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DestinationPort)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.SourcePort)
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.CargoContents)
@@ -64,6 +95,13 @@
                     <td>
                         @Html.DisplayFor(modelItem => item.Status)
                     </td>
+                    @*<td>
+                        @Html.DisplayFor(modelItem => item.DestinationPortId)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.SourcePortId)
+                    </td>*@
+
                     <td>
                         @Html.ActionLink("Edit", "Edit", new {  id=item.ShipmentId  }) |
                         @Html.ActionLink("Details", "Details", new {  id=item.ShipmentId  }) |
@@ -78,3 +116,4 @@ else
 {
     <p>EmptyModel</p>
 }
+

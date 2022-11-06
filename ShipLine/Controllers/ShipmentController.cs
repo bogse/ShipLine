@@ -1,35 +1,60 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using ShipLine.Data;
 using ShipLine.Models;
 using ShipLine.Repository;
+using ShipLine.ViewModel;
 
 namespace ShipLine.Controllers
 {
     public class ShipmentController : Controller
     {
         private ShipmentRepository _shipmentRepository;
+        private ClientRepository _clientRepository;
+        private PortRepository _portRepository;
         public ShipmentController(ApplicationDbContext dbContext)
         {
             _shipmentRepository = new ShipmentRepository(dbContext);
+            _clientRepository = new ClientRepository(dbContext);
+            _portRepository = new PortRepository(dbContext);
         }
         // GET: ShipmentController
         public ActionResult Index()
         {
             var list = _shipmentRepository.GetAllShipments();
-            return View("Index", list);
+            var viewModelList = new List<ShipmentViewModel>();
+            foreach (var shipment in list)
+            {
+                viewModelList.Add(new ShipmentViewModel(shipment, _clientRepository, _portRepository));
+            }
+            return View("Index", viewModelList);
         }
 
         // GET: ShipmentController/Details/5
         public ActionResult Details(Guid id)
         {
             var model = _shipmentRepository.GetShipmentById(id);
-            return View("DetailsShipment", model);
+            var viewModel = new ShipmentViewModel(model, _clientRepository, _portRepository);
+
+            return View("DetailsShipment", viewModel);
         }
 
         // GET: ShipmentController/Create
         public ActionResult Create()
         {
+            var clients = _clientRepository.GetAllClients();
+            var clientList = clients.Select(x => new SelectListItem(x.ClientName, x.ClientId.ToString()));
+            ViewBag.ClientList = clientList;
+
+            var destinationPorts = _portRepository.GetAllPorts();
+            var destinationPortList = destinationPorts.Select(x => new SelectListItem(x.Name, x.PortId.ToString()));
+            ViewBag.DestinationPortList = destinationPortList;
+
+            var sourcePorts = _portRepository.GetAllPorts();
+            var sourcePortList = sourcePorts.Select(x => new SelectListItem(x.Name, x.PortId.ToString()));
+            ViewBag.SourcePortList = sourcePortList;
+
             return View("CreateShipment");
         }
 
@@ -59,6 +84,19 @@ namespace ShipLine.Controllers
         public ActionResult Edit(Guid id)
         {
             var model = _shipmentRepository.GetShipmentById(id);
+
+            var clients = _clientRepository.GetAllClients();
+            var clientList = clients.Select(x => new SelectListItem(x.ClientName, x.ClientId.ToString()));
+            ViewBag.ClientList = clientList;
+
+            var destinationPorts = _portRepository.GetAllPorts();
+            var destinationPortList = destinationPorts.Select(x => new SelectListItem(x.Name, x.PortId.ToString()));
+            ViewBag.DestinationPortList = destinationPortList;
+
+            var sourcePorts = _portRepository.GetAllPorts();
+            var sourcePortList = sourcePorts.Select(x => new SelectListItem(x.Name, x.PortId.ToString()));
+            ViewBag.SourcePortList = sourcePortList;
+
             return View("EditShipment", model);
         }
 
@@ -88,7 +126,9 @@ namespace ShipLine.Controllers
         public ActionResult Delete(Guid id)
         {
             var model = _shipmentRepository.GetShipmentById(id);
-            return View("DeleteShipment", model);
+            var viewModel = new ShipmentViewModel(model, _clientRepository, _portRepository);
+
+            return View("DeleteShipment", viewModel);
         }
 
         // POST: ShipmentController/Delete/5

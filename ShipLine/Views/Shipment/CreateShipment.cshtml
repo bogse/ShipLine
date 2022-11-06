@@ -18,10 +18,25 @@
                 <input asp-for="ShipmentId" class="form-control" />
                 <span asp-validation-for="ShipmentId" class="text-danger"></span>
             </div>*@
+            @*<div class="form-group">
+                <label asp-for="ShipmentNumber" class="control-label"></label>
+                <input asp-for="ShipmentNumber" hidden class="form-control" />
+                <span asp-validation-for="ShipmentNumber" class="text-danger"></span>
+            </div>*@
             <div class="form-group">
-                <label asp-for="CustomerId" class="control-label"></label>
-                <input asp-for="CustomerId" class="form-control" />
+                <label asp-for="CustomerId" class="control-label">Customer</label>
+                @Html.DropDownList("CustomerId", new SelectList(ViewBag.ClientList, "Value", "Text"), "", new {@class= "form-control"})
                 <span asp-validation-for="CustomerId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DestinationPortId" class="control-label">Destination Port</label>
+                @Html.DropDownList("DestinationPortId", new SelectList(ViewBag.DestinationPortList, "Value", "Text"), "", new {@class= "form-control"})
+                <span asp-validation-for="DestinationPortId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SourcePortId" class="control-label">Source Port</label>
+                @Html.DropDownList("SourcePortId", new SelectList(ViewBag.SourcePortList, "Value", "Text"), "", new {@class= "form-control"})
+                <span asp-validation-for="SourcePortId" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="CargoContents" class="control-label"></label>
@@ -42,12 +57,13 @@
                 <label asp-for="NeedByDate" class="control-label"></label>
                 <input asp-for="NeedByDate" class="form-control" />
                 <span asp-validation-for="NeedByDate" class="text-danger"></span>
-            </div>
+            </div>            
             <div class="form-group">
                 <label asp-for="Status" class="control-label"></label>
                 <input asp-for="Status" class="form-control" />
                 <span asp-validation-for="Status" class="text-danger"></span>
             </div>
+            
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>

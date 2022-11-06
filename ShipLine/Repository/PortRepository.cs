@@ -80,8 +80,21 @@ namespace ShipLine.Repository
                 var routes = _DBContext.Routes.Where(x => x.SourcePortId == dbObject.PortId || x.DestinationPortId == dbObject.PortId);
                 foreach (var route in routes)
                 {
+                    var voyages = _DBContext.Voyages.Where(x => x.RouteId == route.RouteId);
+                    foreach (var voyage in voyages)
+                    {
+                        _DBContext.Voyages.Remove(voyage);
+                    }
                     _DBContext.Routes.Remove(route);
                 }
+
+                var shipments = _DBContext.Shipments.Where(x => x.SourcePortId == dbObject.PortId || x.DestinationPortId == dbObject.PortId);
+                foreach (var shipment in shipments)
+                {
+                    _DBContext.Shipments.Remove(shipment);
+                }
+
+                
                 _DBContext.Ports.Remove(dbObject);
                 _DBContext.SaveChanges();
             }

@@ -9,5 +9,8 @@
         public DateTime ShipRequestDate { get; set; }
         public DateTime NeedByDate { get; set; }
         public string Status { get; set; } = null!;
+        public Guid DestinationPortId { get; set; }
+        public Guid SourcePortId { get; set; }
+        public int ShipmentNumber { get; set; }
     }
 }
