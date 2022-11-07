@@ -13,7 +13,7 @@
 <table class="table">
     <thead>
         <tr>
-            @*<th>
+@*            <th>
                 @Html.DisplayNameFor(model => model.VoyageShipmentId)
             </th>
             <th>
@@ -28,13 +28,37 @@
             <th>
                 @Html.DisplayNameFor(model => model.VoyageNumber)
             </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DestinationPort)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SourcePort)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ShipRoute)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CargoContents)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.QuantityTeq)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.VoyageQuantity)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.StartDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EndDate)
+            </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
 @foreach (var item in Model) {
         <tr>
-            @*<td>
+@*            <td>
                 @Html.DisplayFor(modelItem => item.VoyageShipmentId)
             </td>
             <td>
@@ -48,6 +72,30 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.VoyageNumber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DestinationPort)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SourcePort)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ShipRoute)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CargoContents)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.QuantityTeq)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.VoyageQuantity)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.StartDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EndDate)
             </td>
             <td>
                 @Html.ActionLink("Edit", "Edit", new {  id=item.VoyageShipmentId  }) |
