@@ -13,11 +13,13 @@ namespace ShipLine.Controllers
         private VoyageRepository _voyageRepository;
         private ShipRepository _shipRepository;
         private RouteRepository _routeRepository;
+
         public VoyageController(ApplicationDbContext dbContext)
         {
             _voyageRepository = new VoyageRepository(dbContext);
             _shipRepository = new ShipRepository(dbContext);
             _routeRepository = new RouteRepository(dbContext);
+
         }
         // GET: VoyageController
         public ActionResult Index()

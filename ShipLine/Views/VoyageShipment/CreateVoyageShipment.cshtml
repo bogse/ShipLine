@@ -23,7 +23,7 @@
                 @Html.DropDownList("VoyageId", new SelectList(ViewBag.VoyageList, "Value", "Text"), "", new {@class= "form-control"})
                 <span asp-validation-for="VoyageId" class="text-danger"></span>
             </div>
-            <div class="form-group">
+@*            <div class="form-group">
                 <label asp-for="ShipRoute" class="control-label"></label>
                 <input asp-for="ShipRoute" class="form-control" />
                 <span asp-validation-for="ShipRoute" class="text-danger"></span>
@@ -42,13 +42,15 @@
                 <label asp-for="EndDate" class="control-label"></label>
                 <input asp-for="EndDate" class="form-control" />
                 <span asp-validation-for="EndDate" class="text-danger"></span>
-            </div>
+            </div>*@
 
             <div class="form-group">
                 <label asp-for="ShipmentId" class="control-label">ShipmentNumber</label>
                 @Html.DropDownList("ShipmentId", new SelectList(ViewBag.ShipmentList, "Value", "Text"), "", new {@class= "form-control"})
                 <span asp-validation-for="ShipmentId" class="text-danger"></span>
             </div>
+
+
             @*<div class="form-group">
                 <label asp-for="ShipmentNumber" class="control-label"></label>
                 <input asp-for="ShipmentNumber" class="form-control" />
@@ -59,7 +61,9 @@
                 <input asp-for="VoyageNumber" class="form-control" />
                 <span asp-validation-for="VoyageNumber" class="text-danger"></span>
             </div>*@
-            <div class="form-group">
+
+
+@*            <div class="form-group">
                 <label asp-for="DestinationPort" class="control-label"></label>
                 <input asp-for="DestinationPort" class="form-control" />
                 <span asp-validation-for="DestinationPort" class="text-danger"></span>
@@ -74,13 +78,17 @@
                 <label asp-for="CargoContents" class="control-label"></label>
                 <input asp-for="CargoContents" class="form-control" />
                 <span asp-validation-for="CargoContents" class="text-danger"></span>
-            </div>
+            </div>*@
+
+
             @*<div class="form-group">
                 <label asp-for="CostPerTeq" class="control-label"></label>
                 <input asp-for="CostPerTeq" class="form-control" />
                 <span asp-validation-for="CostPerTeq" class="text-danger"></span>
             </div>*@
-            <div class="form-group">
+
+
+@*            <div class="form-group">
                 <label asp-for="QuantityTeq" class="control-label"></label>
                 <input asp-for="QuantityTeq" class="form-control" />
                 <span asp-validation-for="QuantityTeq" class="text-danger"></span>
@@ -90,6 +98,7 @@
                 <input asp-for="NeedByDate" class="form-control" />
                 <span asp-validation-for="NeedByDate" class="text-danger"></span>
             </div>
+*@
 
             @*<div class="form-group">
                 <label asp-for="TotalCost" class="control-label"></label>

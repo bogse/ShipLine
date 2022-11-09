@@ -2,8 +2,10 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using ShipLine.Data;
 using ShipLine.Models;
+using ShipLine.Models.DBObjects;
 using ShipLine.Repository;
 using ShipLine.ViewModel;
 using System.Diagnostics;
@@ -37,11 +39,6 @@ namespace ShipLine.Controllers
                 viewModelList.Add(new VoyageShipmentViewModel(voyageShipment, _shipmentRepository, _voyageRepository, _portRepository, _routeRepository));
             }
 
-            //var totals = from v in viewModelList
-            //            group v by v.VoyageId into g
-            //            select new { VoyageId = g.Key, VoyageQuantity = g.Sum(x => x.QuantityTeq) };
-
-
             return View("Index", viewModelList);
         }
 
@@ -64,7 +61,7 @@ namespace ShipLine.Controllers
             var shipments = _shipmentRepository.GetAllShipments();
             var shipmentList = shipments.Select(x => new SelectListItem(x.ShipmentNumber.ToString(), x.ShipmentId.ToString()));
             ViewBag.ShipmentList = shipmentList;
-;
+
             return View("CreateVoyageShipment");
         }
 
@@ -75,7 +72,7 @@ namespace ShipLine.Controllers
         {
             try
             {
-                var model = new VoyageShipmentModel();
+                var model = new VoyageShipmentModel();               
                 var task = TryUpdateModelAsync(model);
                 task.Wait();
                 if (task.Result)
@@ -115,6 +112,7 @@ namespace ShipLine.Controllers
             try
             {
                 var model = new VoyageShipmentModel();
+                
                 var task = TryUpdateModelAsync(model);
                 task.Wait();
                 if (task.Result)

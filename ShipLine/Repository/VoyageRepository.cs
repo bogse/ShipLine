@@ -1,4 +1,5 @@
-﻿using ShipLine.Data;
+﻿using Microsoft.EntityFrameworkCore;
+using ShipLine.Data;
 using ShipLine.Models;
 using ShipLine.Models.DBObjects;
 

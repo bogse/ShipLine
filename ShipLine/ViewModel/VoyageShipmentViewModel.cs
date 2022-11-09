@@ -41,8 +41,8 @@ namespace ShipLine.ViewModel
             this.ShipRoute = route.Name;
             this.CargoContents = shipment.CargoContents;
             this.CostPerTeq = voyage.CostPerTeq;
-            this.QuantityTeq = shipment.QuantityTeq;
-            this.VoyageQuantity = voyage.VoyageQuantity;
+            this.QuantityTeq = shipment.QuantityTeq;;
+            this.VoyageQuantity = shipmentRepository.GetTotalQuantityPerVoyage(voyage.VoyageId);
             this.StartDate = voyage.StartDate;
             this.EndDate = voyage.EndDate;
             this.NeedByDate = shipment.NeedByDate;

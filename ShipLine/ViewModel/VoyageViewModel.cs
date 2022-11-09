@@ -1,4 +1,5 @@
 ﻿using ShipLine.Models;
+using ShipLine.Models.DBObjects;
 using ShipLine.Repository;
 
 namespace ShipLine.ViewModel
