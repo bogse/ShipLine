@@ -1,5 +1,6 @@
 ﻿using ShipLine.Models;
 using ShipLine.Repository;
+using System.ComponentModel.DataAnnotations;
 
 namespace ShipLine.ViewModel
 {
@@ -9,7 +10,13 @@ namespace ShipLine.ViewModel
         public Guid CustomerId { get; set; }
         public string CargoContents { get; set; } = null!;
         public int QuantityTeq { get; set; }
+
+        [DisplayFormat(DataFormatString = "{0:MM/dd/yyyy}")]
+        [DataType(DataType.Date)]
         public DateTime ShipRequestDate { get; set; }
+
+        [DisplayFormat(DataFormatString = "{0:MM/dd/yyyy}")]
+        [DataType(DataType.Date)]
         public DateTime NeedByDate { get; set; }
         public string Status { get; set; } = null!;
         public Guid DestinationPortId { get; set; }

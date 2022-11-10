@@ -20,14 +20,52 @@ namespace ShipLine.Controllers
             _portRepository = new PortRepository(dbContext);
         }
         // GET: ShipmentController
-        public ActionResult Index()
+        public ActionResult Index(string searchString, string sortOrder, string currentFilter, int? pageNumber)
         {
+            ViewData["StatusSortParam"] = String.IsNullOrEmpty(sortOrder) ? "status_desc" : "";
+            ViewData["ClientSortParam"] = String.IsNullOrEmpty(sortOrder) ? "client_desc" : "";
+            ViewData["DateSortParam"] = sortOrder == "NeedByDate" ? "need_by_date_desc" : "NeedByDate";
+            ViewData["CurrentFilter"] = searchString;
+
+            if (searchString != null)
+            {
+                pageNumber = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+
             var list = _shipmentRepository.GetAllShipments();
             var viewModelList = new List<ShipmentViewModel>();
             foreach (var shipment in list)
             {
                 viewModelList.Add(new ShipmentViewModel(shipment, _clientRepository, _portRepository));
             }
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                viewModelList = viewModelList.Where(s => s.CustomerName!.Contains(searchString)).ToList();
+            }
+           
+            switch (sortOrder)
+            {
+                case "client_desc":
+                    viewModelList = viewModelList.OrderByDescending(x => x.CustomerName).ToList();
+                    break;
+                case "NeedByDate":
+                    viewModelList = viewModelList.OrderBy(x => x.NeedByDate).ToList();
+                    break;
+                case "need_by_date_desc":
+                    viewModelList = viewModelList.OrderByDescending(x => x.NeedByDate).ToList();
+                    break;
+                default:
+                    viewModelList = viewModelList.OrderBy(x => x.CustomerName).ToList();
+                    break;
+            }
+
+            int pageSize = 3;
+
             return View("Index", viewModelList);
         }
 
