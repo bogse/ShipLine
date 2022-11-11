@@ -58,7 +58,17 @@ namespace ShipLine.Controllers
             var voyageList = voyages.Select(x => new SelectListItem(x.VoyageNumber.ToString(), x.VoyageId.ToString()));
             ViewBag.VoyageList = voyageList;
 
-            var shipments = _shipmentRepository.GetAllShipments();
+            var model = new VoyageShipmentModel();
+
+            var routes = _routeRepository.GetVoyageRoute(model.VoyageId);
+            var shipments = new List<ShipmentModel>();
+
+            foreach (var route in routes)
+            {
+                shipments = _shipmentRepository.GetShipmentsByRoute(route.RouteId);
+            }
+
+            //var shipments = _shipmentRepository.GetAllShipments();
             var shipmentList = shipments.Select(x => new SelectListItem(x.ShipmentNumber.ToString(), x.ShipmentId.ToString()));
             ViewBag.ShipmentList = shipmentList;
 
@@ -72,7 +82,7 @@ namespace ShipLine.Controllers
         {
             try
             {
-                var model = new VoyageShipmentModel();               
+                var model = new VoyageShipmentModel();
                 var task = TryUpdateModelAsync(model);
                 task.Wait();
                 if (task.Result)
@@ -93,13 +103,16 @@ namespace ShipLine.Controllers
             var model = _voyageShipmentRepository.GetVoyageShipmentById(id);
             var viewModel = new VoyageShipmentViewModel(model, _shipmentRepository, _voyageRepository, _portRepository, _routeRepository);
 
+            var voyages = _voyageRepository.GetAllVoyages();
+            var voyageList = voyages.Select(x => new SelectListItem(x.VoyageNumber.ToString(), x.VoyageId.ToString()));
+            ViewBag.VoyageList = voyageList;
+
+
             var shipments = _shipmentRepository.GetAllShipments();
             var shipmentList = shipments.Select(x => new SelectListItem(x.ShipmentNumber.ToString(), x.ShipmentId.ToString()));
             ViewBag.ShipmentList = shipmentList;
 
-            var voyages = _voyageRepository.GetAllVoyages();
-            var voyageList = voyages.Select(x => new SelectListItem(x.VoyageNumber.ToString(), x.VoyageId.ToString()));
-            ViewBag.VoyageList = voyageList;
+
 
             return View("EditVoyageShipment", viewModel);
         }
@@ -112,7 +125,7 @@ namespace ShipLine.Controllers
             try
             {
                 var model = new VoyageShipmentModel();
-                
+
                 var task = TryUpdateModelAsync(model);
                 task.Wait();
                 if (task.Result)

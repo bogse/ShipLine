@@ -7,6 +7,9 @@
 
 <h1>DetailsShipment</h1>
 
+@{
+    ViewData["Title"] = "Instructors";
+}
 <div>
     <h4>ShipmentViewModel</h4>
     <hr />
@@ -77,6 +80,16 @@
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.Status)
         </dd>
+        @foreach (var item in ViewData["Voyages"] as IList<VoyageModel>)
+        {
+            <dt>
+                @item.VoyageNumber
+            </dt>
+            <dt>
+                @item.RouteId
+            </dt>
+        }
+
         @*<dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.DestinationPortId)
         </dt>

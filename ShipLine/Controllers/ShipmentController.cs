@@ -13,11 +13,15 @@ namespace ShipLine.Controllers
         private ShipmentRepository _shipmentRepository;
         private ClientRepository _clientRepository;
         private PortRepository _portRepository;
+        private VoyageShipmentRepository _voyageShipmentRepository;
+        private VoyageRepository _voyageRepository;
         public ShipmentController(ApplicationDbContext dbContext)
         {
             _shipmentRepository = new ShipmentRepository(dbContext);
             _clientRepository = new ClientRepository(dbContext);
             _portRepository = new PortRepository(dbContext);
+            _voyageShipmentRepository = new VoyageShipmentRepository(dbContext);
+            _voyageRepository = new VoyageRepository(dbContext);
         }
         // GET: ShipmentController
         public ActionResult Index(string searchString, string sortOrder, string currentFilter, int? pageNumber)
@@ -47,7 +51,7 @@ namespace ShipLine.Controllers
             {
                 viewModelList = viewModelList.Where(s => s.CustomerName!.Contains(searchString)).ToList();
             }
-           
+
             switch (sortOrder)
             {
                 case "client_desc":
@@ -74,6 +78,15 @@ namespace ShipLine.Controllers
         {
             var model = _shipmentRepository.GetShipmentById(id);
             var viewModel = new ShipmentViewModel(model, _clientRepository, _portRepository);
+
+            var shipmentVoyages = _voyageShipmentRepository.GetAllVoyageShipments().Where(x => x.ShipmentId == model.ShipmentId);
+            
+            var list = new List<VoyageModel>();
+            foreach (var voyage in shipmentVoyages)
+            {
+                list.Add(_voyageRepository.GetVoyageById(voyage.VoyageId));
+            }
+            ViewData["Voyages"] = list;
 
             return View("DetailsShipment", viewModel);
         }
@@ -182,6 +195,38 @@ namespace ShipLine.Controllers
             catch
             {
                 return RedirectToAction("Delete", id);
+            }
+        }
+        public ActionResult AddToVoyage(Guid id)
+        {
+            var shipment = _shipmentRepository.GetShipmentById(id);
+
+            var voyages = _voyageRepository.GetAllVoyages();
+            var voyageList = voyages.Select(x => new SelectListItem(x.VoyageNumber.ToString(), x.VoyageId.ToString()));
+            ViewBag.VoyageList = voyageList;
+
+            return View("AddToVoyage");
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult AddToVoyage(Guid id, IFormCollection collection)
+        {
+            try
+            {
+                var model = new VoyageShipmentModel();
+                model.ShipmentId = id;
+                var task = TryUpdateModelAsync(model);
+                task.Wait();
+                if (task.Result)
+                {
+                    _voyageShipmentRepository.InsertVoyageShipment(model);
+                }
+                return RedirectToAction("Index");
+            }
+            catch
+            {
+                return View("AddToVoyage");
             }
         }
     }

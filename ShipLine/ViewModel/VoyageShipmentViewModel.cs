@@ -32,8 +32,7 @@ namespace ShipLine.ViewModel
         [DataType(DataType.Date)]
         public DateTime NeedByDate { get; set; }
 
-
-        public VoyageShipmentViewModel(VoyageShipmentModel model, ShipmentRepository shipmentRepository, 
+        public VoyageShipmentViewModel(VoyageShipmentModel model, ShipmentRepository shipmentRepository,
                 VoyageRepository voyageRepository, PortRepository portRepository, RouteRepository routeRepository)
         {
             this.VoyageShipmentId = model.VoyageShipmentId;
@@ -51,7 +50,7 @@ namespace ShipLine.ViewModel
             this.ShipRoute = route.Name;
             this.CargoContents = shipment.CargoContents;
             this.CostPerTeq = voyage.CostPerTeq;
-            this.QuantityTeq = shipment.QuantityTeq;;
+            this.QuantityTeq = shipment.QuantityTeq; ;
             this.VoyageQuantity = shipmentRepository.GetTotalQuantityPerVoyage(voyage.VoyageId);
             this.StartDate = voyage.StartDate;
             this.EndDate = voyage.EndDate;

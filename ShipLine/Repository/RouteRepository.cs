@@ -1,4 +1,5 @@
-﻿using ShipLine.Data;
+﻿using Microsoft.CodeAnalysis.CSharp.Syntax;
+using ShipLine.Data;
 using ShipLine.Models;
 using Route = ShipLine.Models.DBObjects.Route;
 
@@ -85,5 +86,16 @@ namespace ShipLine.Repository
                 _DBContext.SaveChanges();
             }
         }
+
+        public List<RouteModel> GetVoyageRoute(Guid id)
+        {
+            var voyages = _DBContext.Voyages.Where(x => x.VoyageId == id);
+            var routes = new List<RouteModel>();
+            foreach(var voyage in voyages)
+            {
+                routes.Add(MapDBObjectToModel(_DBContext.Routes.FirstOrDefault(x => x.RouteId == voyage.RouteId)));
+            }
+            return routes;
+        }       
     }
 }

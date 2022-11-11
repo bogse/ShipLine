@@ -124,5 +124,19 @@ namespace ShipLine.Repository
 
             return sum;
         }
+        public List<ShipmentModel> GetShipmentsByRoute(Guid id)
+        {
+            var routes = _DBContext.Routes.Where(x => x.RouteId == id);
+
+            var shipmentList = new List<ShipmentModel>();
+            foreach (var route in routes)
+            {
+                shipmentList.Add(MapDBObjectToModel(_DBContext.Shipments
+                            .FirstOrDefault(x => x.DestinationPortId == route.DestinationPortId && x.SourcePortId == route.DestinationPortId)));
+            }
+            //shipmentList = shipmentList.Where(x => x.NeedByDate > DateTime.Now).ToList(); // asa se fac query-uri profesor
+
+            return shipmentList;
+        }
     }
 }

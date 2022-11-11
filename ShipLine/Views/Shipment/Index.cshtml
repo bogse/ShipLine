@@ -116,7 +116,8 @@
                     <td>
                         @Html.ActionLink("Edit", "Edit", new {  id=item.ShipmentId  }) |
                         @Html.ActionLink("Details", "Details", new {  id=item.ShipmentId  }) |
-                        @Html.ActionLink("Delete", "Delete", new {  id=item.ShipmentId  })
+                        @Html.ActionLink("Delete", "Delete", new {  id=item.ShipmentId  }) |
+                        @Html.ActionLink("AddToVoyage", "AddToVoyage", new { id=item.ShipmentId})
                     </td>
                 </tr>
             }

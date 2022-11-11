@@ -234,7 +234,7 @@ namespace ShipLine.Data
                     .WithMany(p => p.ShipmentSourcePorts)
                     .HasForeignKey(d => d.SourcePortId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_ShipmentSourcePort_Port");
+                    .HasConstraintName("FK_ShipmentSource_Port");
             });
 
             modelBuilder.Entity<Voyage>(entity =>
