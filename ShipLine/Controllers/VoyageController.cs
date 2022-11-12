@@ -198,7 +198,8 @@ namespace ShipLine.Controllers
         {
             var model = _voyageRepository.GetVoyageById(id);
             var route = _routeRepository.GetRouteById(model.RouteId);
-            var shipments = _shipmentRepository.GetAllShipments().Where(x => x.DestinationPortId == route.DestinationPortId && x.SourcePortId == route.SourcePortId);
+            var shipments = _shipmentRepository.GetAllShipments().Where(x => x.DestinationPortId == route.DestinationPortId && x.SourcePortId == route.SourcePortId
+                            && x.NeedByDate > model.EndDate && model.StartDate > DateTime.Now);
 
             var shipmentList = shipments.Select(x => new SelectListItem(x.ShipmentNumber.ToString(), x.ShipmentId.ToString()));
             ViewBag.ShipmentList = shipmentList;
