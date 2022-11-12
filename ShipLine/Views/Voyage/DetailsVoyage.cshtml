@@ -71,6 +71,62 @@
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.CostPerTeq)
         </dd>
+
+        <style>
+            table, th, td {
+                border: 1px solid black;
+            }
+        </style>
+
+        @if (ViewData["Shipments"] != null)
+        {
+            <table>
+                <tr>
+                    <th>
+                        <p>Shipment Number</p>
+                    </th>
+                    <th>
+                        <p>Need By Date</p>
+                    </th>
+                    <th>
+                        <p>Destination Port</p>
+                    </th>
+                    <th>
+                        <p>Source Port</p>
+                    </th>
+                    <th>
+                        <p>Cargo Contents</p>
+                    </th>
+                    <th>
+                        <p>Quantity Teq</p>
+                    </th>
+                </tr>
+
+                @foreach (var item in ViewData["Shipments"] as IList<ShipmentModel>)
+                {
+                    <tr>
+                        <td>
+                            @item.ShipmentNumber
+                        </td>
+                        <td>
+                            @item.NeedByDate.ToString("MM/dd/yyyy")
+                        </td>
+                        <td>
+                            @item.DestinationPortId
+                        </td>
+                        <td>
+                            @item.SourcePortId
+                        </td>
+                        <td>
+                            @item.CargoContents
+                        </td>
+                        <td>
+                            @item.QuantityTeq
+                        </td>
+                    </tr>
+                }
+            </table>
+        }
     </dl>
 </div>
 <div>

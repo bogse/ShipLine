@@ -43,6 +43,15 @@ namespace ShipLine.Controllers
             var model = _voyageRepository.GetVoyageById(id);
             var viewModel = new VoyageViewModel(model, _shipRepository, _routeRepository, _shipmentRepository);
 
+            var voyageShipments = _voyageShipmentRepository.GetAllVoyageShipments().Where(x => x.VoyageId == model.VoyageId);
+
+            var list = new List<ShipmentModel>();
+            foreach (var shipment in voyageShipments)
+            {
+                list.Add(_shipmentRepository.GetShipmentById(shipment.ShipmentId));
+            }
+            ViewData["Shipments"] = list;
+
             return View("DetailsVoyage", viewModel);
         }
 
