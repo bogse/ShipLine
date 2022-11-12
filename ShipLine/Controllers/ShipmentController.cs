@@ -26,10 +26,12 @@ namespace ShipLine.Controllers
         // GET: ShipmentController
         public ActionResult Index(string searchString, string sortOrder, string currentFilter, int? pageNumber)
         {
-            ViewData["StatusSortParam"] = String.IsNullOrEmpty(sortOrder) ? "status_desc" : "";
-            ViewData["ClientSortParam"] = String.IsNullOrEmpty(sortOrder) ? "client_desc" : "";
-            ViewData["DateSortParam"] = sortOrder == "NeedByDate" ? "need_by_date_desc" : "NeedByDate";
-            ViewData["CurrentFilter"] = searchString;
+            ViewData["StatusSortParam"] = String.IsNullOrEmpty(sortOrder) ? "StatusDesc" : "";
+            ViewData["NeedByDateSortParam"] = sortOrder == "NeedByDate" ? "NeedByDateDesc" : "NeedByDate";
+            ViewData["ShipRequestDateSortParam"] = sortOrder == "ShipRequestDate" ? "ShipRequestDateDesc" : "ShipRequestDate";
+            ViewData["ShipmentNumberSortParam"] = sortOrder == "ShipmentNumber" ? "ShipmentNumberDesc" : "ShipmentNumber";
+            ViewData["QuantitySortParam"] = sortOrder == "Quantity" ? "QuantityDesc" : "Quantity";
+            ViewData["CurrentFilterSortParam"] = searchString;
 
             if (searchString != null)
             {
@@ -54,14 +56,32 @@ namespace ShipLine.Controllers
 
             switch (sortOrder)
             {
-                case "client_desc":
+                case "StatusDesc":
                     viewModelList = viewModelList.OrderByDescending(x => x.CustomerName).ToList();
                     break;
                 case "NeedByDate":
                     viewModelList = viewModelList.OrderBy(x => x.NeedByDate).ToList();
                     break;
-                case "need_by_date_desc":
+                case "NeedByDateDesc":
                     viewModelList = viewModelList.OrderByDescending(x => x.NeedByDate).ToList();
+                    break;
+                case "ShipRequestDate":
+                    viewModelList = viewModelList.OrderBy(x => x.ShipRequestDate).ToList();
+                    break;
+                case "ShipRequestDateDesc":
+                    viewModelList = viewModelList.OrderByDescending(x => x.ShipRequestDate).ToList();
+                    break;
+                case "ShipmentNumber":
+                    viewModelList = viewModelList.OrderBy(x => x.ShipmentNumber).ToList();
+                    break;
+                case "ShipmentNumberDesc":
+                    viewModelList = viewModelList.OrderByDescending(x => x.ShipmentNumber).ToList();
+                    break;
+                case "Quantity":
+                    viewModelList = viewModelList.OrderBy(x => x.QuantityTeq).ToList();
+                    break;
+                case "QuantityDesc":
+                    viewModelList = viewModelList.OrderByDescending(x => x.QuantityTeq).ToList();
                     break;
                 default:
                     viewModelList = viewModelList.OrderBy(x => x.CustomerName).ToList();

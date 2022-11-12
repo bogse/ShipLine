@@ -25,13 +25,54 @@ namespace ShipLine.Controllers
             _voyageShipmentRepository = new VoyageShipmentRepository(dbContext);
         }
         // GET: VoyageController
-        public ActionResult Index()
+        public ActionResult Index(string searchString, string sortOrder, string currentFilter, int? pageNumber)
         {
+            ViewData["VoyageNumberSortParam"] = String.IsNullOrEmpty(sortOrder) ? "VoyageDesc" : "";
+            ViewData["StartDateSortParam"] = sortOrder == "StartDate" ? "StartDateDesc" : "StartDate";
+            ViewData["EndDateSortParam"] = sortOrder == "EndDate" ? "EndDateDesc" : "EndDate";
+            ViewData["CurrentFilter"] = searchString;
+
+            if (searchString != null)
+            {
+                pageNumber = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+
             var list = _voyageRepository.GetAllVoyages();
             var viewModelList = new List<VoyageViewModel>();
             foreach(var voyage in list)
             {
                 viewModelList.Add(new VoyageViewModel(voyage, _shipRepository, _routeRepository, _shipmentRepository));
+            }
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                viewModelList = viewModelList.Where(s => s.RouteName!.Contains(searchString)).ToList();
+            }
+
+            switch (sortOrder)
+            {
+                case "VoyageDesc":
+                    viewModelList = viewModelList.OrderByDescending(x => x.VoyageNumber).ToList();
+                    break;
+                case "StartDate":
+                    viewModelList = viewModelList.OrderBy(x => x.StartDate).ToList();
+                    break;
+                case "StartDateDesc":
+                    viewModelList = viewModelList.OrderByDescending(x => x.StartDate).ToList();
+                    break;
+                case "EndDate":
+                    viewModelList = viewModelList.OrderBy(x => x.EndDate).ToList();
+                    break;
+                case "EndDateDesc":
+                    viewModelList = viewModelList.OrderByDescending(x => x.EndDate).ToList();
+                    break;
+                default:
+                    viewModelList = viewModelList.OrderBy(x => x.VoyageNumber).ToList();
+                    break;
             }
 
             return View("Index", viewModelList);

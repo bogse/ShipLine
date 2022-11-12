@@ -34,10 +34,10 @@
                     @Html.DisplayNameFor(model => model.CustomerId)
                 </th>*@
                 <th>
-                    @Html.DisplayNameFor(model => model.ShipmentNumber)
+                    <a asp-action="Index" asp-route-sortOrder="@ViewData["ShipmentNumberSortParam"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">ShipmentNumber</a>
                 </th>
                 <th>
-                    <a asp-action="Index" asp-route-sortOrder="@ViewData["ClientSortParam"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">Customer Name</a>
+                    @Html.DisplayNameFor(model => model.CustomerName)
                 </th>
                 <th>
                     @Html.DisplayNameFor(model => model.DestinationPort)
@@ -49,16 +49,16 @@
                     @Html.DisplayNameFor(model => model.CargoContents)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.QuantityTeq)
+                    <a asp-action="Index" asp-route-sortOrder="@ViewData["QuantitySortParam"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">QuantityTeq</a>
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.ShipRequestDate)
+                    <a asp-action="Index" asp-route-sortOrder="@ViewData["ShipRequestDateSortParam"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">ShipRequestDate</a>
                 </th>
                 <th>                    
-                    <a asp-action="Index" asp-route-sortOrder="@ViewData["DateSortParam"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">NeedByDate</a>
+                    <a asp-action="Index" asp-route-sortOrder="@ViewData["NeedByDateSortParam"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">NeedByDate</a>
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Status)
+                    <a asp-action="Index" asp-route-sortOrder="@ViewData["StatusSortParam"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">Status</a>
                 </th>
                 @*<th>
                     @Html.DisplayNameFor(model => model.DestinationPortId)
