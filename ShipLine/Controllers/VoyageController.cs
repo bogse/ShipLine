@@ -13,13 +13,16 @@ namespace ShipLine.Controllers
         private VoyageRepository _voyageRepository;
         private ShipRepository _shipRepository;
         private RouteRepository _routeRepository;
+        private ShipmentRepository _shipmentRepository;
+        private VoyageShipmentRepository _voyageShipmentRepository;
 
         public VoyageController(ApplicationDbContext dbContext)
         {
             _voyageRepository = new VoyageRepository(dbContext);
             _shipRepository = new ShipRepository(dbContext);
             _routeRepository = new RouteRepository(dbContext);
-
+            _shipmentRepository = new ShipmentRepository(dbContext);
+            _voyageShipmentRepository = new VoyageShipmentRepository(dbContext);
         }
         // GET: VoyageController
         public ActionResult Index()
@@ -28,7 +31,7 @@ namespace ShipLine.Controllers
             var viewModelList = new List<VoyageViewModel>();
             foreach(var voyage in list)
             {
-                viewModelList.Add(new VoyageViewModel(voyage, _shipRepository, _routeRepository));
+                viewModelList.Add(new VoyageViewModel(voyage, _shipRepository, _routeRepository, _shipmentRepository));
             }
 
             return View("Index", viewModelList);
@@ -38,7 +41,7 @@ namespace ShipLine.Controllers
         public ActionResult Details(Guid id)
         {
             var model = _voyageRepository.GetVoyageById(id);
-            var viewModel = new VoyageViewModel(model, _shipRepository, _routeRepository);
+            var viewModel = new VoyageViewModel(model, _shipRepository, _routeRepository, _shipmentRepository);
 
             return View("DetailsVoyage", viewModel);
         }
@@ -121,7 +124,7 @@ namespace ShipLine.Controllers
         public ActionResult Delete(Guid id)
         {
             var model = _voyageRepository.GetVoyageById(id);
-            var viewModel = new VoyageViewModel(model, _shipRepository, _routeRepository);
+            var viewModel = new VoyageViewModel(model, _shipRepository, _routeRepository, _shipmentRepository);
 
             return View("DeleteVoyage", viewModel);
         }
@@ -139,6 +142,38 @@ namespace ShipLine.Controllers
             catch
             {
                 return RedirectToAction("Delete", id);
+            }
+        }
+        public ActionResult AddShipment(Guid id)
+        {
+            var model = _voyageRepository.GetVoyageById(id);
+
+            var shipments = _shipmentRepository.GetAllShipments();
+            var shipmentList = shipments.Select(x => new SelectListItem(x.ShipmentNumber.ToString(), x.ShipmentId.ToString()));
+            ViewBag.ShipmentList = shipmentList;
+
+            return View("AddShipment");
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult AddShipment(Guid id, IFormCollection collection)
+        {
+            try
+            {
+                var model = new VoyageShipmentModel();
+                model.VoyageId = id;
+                var task = TryUpdateModelAsync(model);
+                task.Wait();
+                if (task.Result)
+                {
+                    _voyageShipmentRepository.InsertVoyageShipment(model);
+                }
+                return RedirectToAction("Index");
+            }
+            catch
+            {
+                return View("AddShipment");
             }
         }
     }

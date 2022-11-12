@@ -26,14 +26,14 @@ namespace ShipLine.ViewModel
         public string ShipName { get; set; }
         public string RouteName { get; set; }
 
-        public VoyageViewModel(VoyageModel model, ShipRepository shipRepository, RouteRepository routeRepository)
+        public VoyageViewModel(VoyageModel model, ShipRepository shipRepository, RouteRepository routeRepository, ShipmentRepository shipmentRepository)
         {
             this.VoyageId = model.VoyageId;
             this.ShipId = model.ShipId;
             this.RouteId = model.RouteId;
             this.StartDate = model.StartDate;
             this.EndDate = model.EndDate;
-            this.VoyageQuantity = model.VoyageQuantity;
+            this.VoyageQuantity = shipmentRepository.GetTotalQuantityPerVoyage(model.VoyageId);
             this.CostPerTeq = model.CostPerTeq;
             this.VoyageNumber = model.VoyageNumber;
             var ship = shipRepository.GetShipById(model.ShipId);
