@@ -134,7 +134,7 @@ namespace ShipLine.Repository
                 shipmentList.Add(MapDBObjectToModel(_DBContext.Shipments
                             .FirstOrDefault(x => x.DestinationPortId == route.DestinationPortId && x.SourcePortId == route.DestinationPortId)));
             }
-            //shipmentList = shipmentList.Where(x => x.NeedByDate > DateTime.Now).ToList(); // asa se fac query-uri profesor
+            shipmentList = shipmentList.Where(x => x.NeedByDate > DateTime.Now).ToList();
 
             return shipmentList;
         }

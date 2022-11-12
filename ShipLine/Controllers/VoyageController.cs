@@ -197,8 +197,9 @@ namespace ShipLine.Controllers
         public ActionResult AddShipment(Guid id)
         {
             var model = _voyageRepository.GetVoyageById(id);
+            var route = _routeRepository.GetRouteById(model.RouteId);
+            var shipments = _shipmentRepository.GetAllShipments().Where(x => x.DestinationPortId == route.DestinationPortId && x.SourcePortId == route.SourcePortId);
 
-            var shipments = _shipmentRepository.GetAllShipments();
             var shipmentList = shipments.Select(x => new SelectListItem(x.ShipmentNumber.ToString(), x.ShipmentId.ToString()));
             ViewBag.ShipmentList = shipmentList;
 

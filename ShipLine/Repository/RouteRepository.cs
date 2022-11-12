@@ -96,6 +96,10 @@ namespace ShipLine.Repository
                 routes.Add(MapDBObjectToModel(_DBContext.Routes.FirstOrDefault(x => x.RouteId == voyage.RouteId)));
             }
             return routes;
-        }       
+        }
+        public RouteModel GetRouteById(Guid sourceId, Guid destId)
+        {
+            return MapDBObjectToModel(_DBContext.Routes.FirstOrDefault(x => x.DestinationPortId == destId && x.SourcePortId == sourceId));
+        }
     }
 }

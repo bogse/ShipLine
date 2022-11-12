@@ -15,6 +15,7 @@ namespace ShipLine.Controllers
         private PortRepository _portRepository;
         private VoyageShipmentRepository _voyageShipmentRepository;
         private VoyageRepository _voyageRepository;
+        private RouteRepository _routeRepository;
         public ShipmentController(ApplicationDbContext dbContext)
         {
             _shipmentRepository = new ShipmentRepository(dbContext);
@@ -22,6 +23,7 @@ namespace ShipLine.Controllers
             _portRepository = new PortRepository(dbContext);
             _voyageShipmentRepository = new VoyageShipmentRepository(dbContext);
             _voyageRepository = new VoyageRepository(dbContext);
+            _routeRepository = new RouteRepository(dbContext);
         }
         // GET: ShipmentController
         public ActionResult Index(string searchString, string sortOrder, string currentFilter, int? pageNumber)
@@ -221,7 +223,8 @@ namespace ShipLine.Controllers
         {
             var shipment = _shipmentRepository.GetShipmentById(id);
 
-            var voyages = _voyageRepository.GetAllVoyages();
+            var route = _routeRepository.GetRouteById(shipment.SourcePortId, shipment.DestinationPortId);
+            var voyages = _voyageRepository.GetAllVoyages().Where(x => x.RouteId == route.RouteId && x.StartDate > DateTime.Now && x.EndDate <= shipment.NeedByDate);
             var voyageList = voyages.Select(x => new SelectListItem(x.VoyageNumber.ToString(), x.VoyageId.ToString()));
             ViewBag.VoyageList = voyageList;
 
