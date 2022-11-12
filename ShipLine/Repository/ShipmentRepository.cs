@@ -1,5 +1,6 @@
 ﻿using Microsoft.CodeAnalysis.VisualBasic.Syntax;
 using ShipLine.Data;
+using ShipLine.Enums;
 using ShipLine.Models;
 using ShipLine.Models.DBObjects;
 

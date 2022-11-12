@@ -2,9 +2,11 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using ShipLine.Data;
+using ShipLine.Enums;
 using ShipLine.Models;
 using ShipLine.Repository;
 using ShipLine.ViewModel;
+using System;
 
 namespace ShipLine.Controllers
 {
@@ -114,7 +116,7 @@ namespace ShipLine.Controllers
         }
 
         // GET: ShipmentController/Create
-        public ActionResult Create()
+        public ActionResult Create(Guid id, string statusType)
         {
             var clients = _clientRepository.GetAllClients();
             var clientList = clients.Select(x => new SelectListItem(x.ClientName, x.ClientId.ToString()));

@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using ShipLine.Enums;
+using System.ComponentModel.DataAnnotations;
 
 namespace ShipLine.Models
 {
@@ -16,9 +17,14 @@ namespace ShipLine.Models
         [DisplayFormat(DataFormatString = "{0:MM/dd/yyyy}")]
         [DataType(DataType.Date)]
         public DateTime NeedByDate { get; set; }
-        public string Status { get; set; } = null!;
+        public string Status
+        {
+            get { return StatusEnum.ToString(); }
+            set { StatusEnum = value.ParseEnum<ShipmentStatusEnum>(); }
+        }
         public Guid DestinationPortId { get; set; }
         public Guid SourcePortId { get; set; }
         public int ShipmentNumber { get; set; }
+        public ShipmentStatusEnum StatusEnum { get; set; }
     }
 }

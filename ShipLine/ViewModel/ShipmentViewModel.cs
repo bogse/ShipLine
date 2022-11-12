@@ -1,4 +1,6 @@
-﻿using ShipLine.Models;
+﻿using Newtonsoft.Json.Linq;
+using ShipLine.Enums;
+using ShipLine.Models;
 using ShipLine.Repository;
 using System.ComponentModel.DataAnnotations;
 
@@ -33,7 +35,7 @@ namespace ShipLine.ViewModel
             this.CargoContents = model.CargoContents;
             this.QuantityTeq = model.QuantityTeq;
             this.ShipRequestDate = model.ShipRequestDate;
-            this.NeedByDate = model.NeedByDate;
+            this.NeedByDate = model.NeedByDate;           
             this.Status = model.Status;
             this.DestinationPortId = model.DestinationPortId;
             this.SourcePortId = model.SourcePortId;
