@@ -44,9 +44,9 @@
                 <span asp-validation-for="EndDate" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="VoyageQuantity" class="control-label"></label>
-                <input asp-for="VoyageQuantity" class="form-control" />
-                <span asp-validation-for="VoyageQuantity" class="text-danger"></span>
+                @*<label asp-for="VoyageQuantity" class="control-label"></label>*@
+                <input asp-for="VoyageQuantity" hidden class="form-control" />
+                @*<span asp-validation-for="VoyageQuantity" class="text-danger"></span>*@
             </div>
             <div class="form-group">
                 <label asp-for="CostPerTeq" class="control-label"></label>

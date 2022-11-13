@@ -172,6 +172,13 @@ namespace ShipLine.Controllers
             var sourcePortList = sourcePorts.Select(x => new SelectListItem(x.Name, x.PortId.ToString()));
             ViewBag.SourcePortList = sourcePortList;
 
+            var statusList = new List<SelectListItem>();
+            foreach (Enum statusEnum in Enum.GetValues(typeof(ShipmentStatusEnum)))
+            {
+                statusList.Add(new SelectListItem { Text = Enum.GetName(typeof(ShipmentStatusEnum), statusEnum) });
+            }
+            ViewBag.StatusList = statusList;
+
             return View("EditShipment", model);
         }
 
