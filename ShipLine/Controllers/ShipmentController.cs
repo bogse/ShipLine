@@ -232,10 +232,17 @@ namespace ShipLine.Controllers
         {
             var shipment = _shipmentRepository.GetShipmentById(id);
 
-            var route = _routeRepository.GetRouteById(shipment.SourcePortId, shipment.DestinationPortId);
-            var voyages = _voyageRepository.GetAllVoyages().Where(x => x.RouteId == route.RouteId && x.StartDate > DateTime.Now && x.EndDate <= shipment.NeedByDate);
-            var voyageList = voyages.Select(x => new SelectListItem(x.VoyageNumber.ToString(), x.VoyageId.ToString()));
-            ViewBag.VoyageList = voyageList;
+            if (shipment.Status == "InProgress")
+            {
+                var route = _routeRepository.GetRouteById(shipment.SourcePortId, shipment.DestinationPortId);
+                var voyages = _voyageRepository.GetAllVoyages().Where(x => x.RouteId == route.RouteId && x.StartDate > DateTime.Now && x.EndDate <= shipment.NeedByDate);
+                var voyageList = voyages.Select(x => new SelectListItem(x.VoyageNumber.ToString(), x.VoyageId.ToString()));
+                ViewBag.VoyageList = voyageList;
+            }
+            else
+            {
+                ViewBag.VoyageList = "";
+            }
 
             return View("AddToVoyage");
         }
