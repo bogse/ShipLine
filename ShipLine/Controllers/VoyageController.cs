@@ -1,10 +1,12 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using ShipLine.Data;
 using ShipLine.Models;
 using ShipLine.Repository;
 using ShipLine.ViewModel;
+
 
 namespace ShipLine.Controllers
 {
@@ -109,7 +111,33 @@ namespace ShipLine.Controllers
 
             return View("CreateVoyage");
         }
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public async Task<IActionResult> Create(VoyageModel model)
+        //{
+        //    var validationResults = _validator.Validate(model);
+        //    ModelStateDictionary modelState = new ModelStateDictionary();
+        //    if (!validationResults.IsValid)
+        //    { 
+        //        foreach (var error in validationResults.Errors)
+        //        {
+        //            modelState.AddModelError(error.PropertyName, error.ErrorMessage);
+        //        }
 
+        //        return View("CreateVoyage");
+        //    }
+        //    else
+        //    {
+        //        model = new VoyageModel();
+        //        var task = TryUpdateModelAsync(model);
+        //        task.Wait();
+        //        if (task.Result)
+        //        {
+        //            _voyageRepository.InsertVoyage(model);
+        //        }
+        //        return RedirectToAction("Index");
+        //    }
+        //}
         // POST: VoyageController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -124,15 +152,45 @@ namespace ShipLine.Controllers
                 {
                     _voyageRepository.InsertVoyage(model);
                 }
+
                 return RedirectToAction("Index");
             }
-            catch
+            catch (Exception ex)
             {
+                throw ex;
                 return View("CreateVoyage");
             }
         }
+        //try
+        //{
+        //    var model = new VoyageModel();
+        //    var task = TryUpdateModelAsync(model);
+        //    task.Wait();
+        //    var validationResults = _validator.Validate(model);
+        //    ModelStateDictionary modelState = new ModelStateDictionary();
+        //    if (!validationResults.IsValid)
+        //    {
+        //        foreach (var error in validationResults.Errors)
+        //        {
+        //            modelState.AddModelError(error.PropertyName, error.ErrorMessage);
+        //        }
 
-        // GET: VoyageController/Edit/5
+        //        return View("CreateVoyage");
+        //    }
+        //    if (task.Result)
+        //    {
+        //        _voyageRepository.InsertVoyage(model);
+        //    }
+
+
+        //    return RedirectToAction("Index");
+        //}
+        //catch
+        //{
+        //    return View("CreateVoyage");
+        //}
+
+            // GET: VoyageController/Edit/5
         public ActionResult Edit(Guid id)
         {
             var model = _voyageRepository.GetVoyageById(id);
@@ -145,7 +203,7 @@ namespace ShipLine.Controllers
             var routeList = routes.Select(x => new SelectListItem(x.Name, x.RouteId.ToString()));
             ViewBag.RouteList = routeList;
 
-            return View("EditVoyage", model);
+        return View("EditVoyage", model);
         }
 
         // POST: VoyageController/Edit/5

@@ -1,4 +1,5 @@
-﻿@model ShipLine.Models.VoyageModel
+﻿@using ShipLine.CustomValidator;
+@model ShipLine.Models.VoyageModel
 
 @{
     ViewData["Title"] = "CreateVoyage";
@@ -35,15 +36,20 @@
             </div>
             <div class="form-group">
                 <label asp-for="StartDate" class="control-label"></label>
-                <input asp-for="StartDate" class="form-control" />
+                Start Date: 
+                @Html.EditorFor(m => m.StartDate)
+                @Html.ValidationMessageFor(m => m.StartDate)
+                @*<input asp-for="StartDate" class="form-control" />*@
                 <span asp-validation-for="StartDate" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="EndDate" class="control-label"></label>
-                <input asp-for="EndDate" class="form-control" />
+                End Date: @Html.EditorFor(m => m.EndDate)
+                @Html.ValidationMessageFor(m => m.EndDate)
+                @*<input asp-for="EndDate" class="form-control" />*@
                 <span asp-validation-for="EndDate" class="text-danger"></span>
             </div>
-@*            <div class="form-group">
+           @*<div class="form-group">
                 <label asp-for="VoyageQuantity" class="control-label"></label>
                 <input asp-for="VoyageQuantity" class="form-control" />
                 <span asp-validation-for="VoyageQuantity" class="text-danger"></span>

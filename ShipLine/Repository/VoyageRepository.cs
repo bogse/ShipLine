@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using ShipLine.CustomValidator;
 using ShipLine.Data;
 using ShipLine.Models;
 using ShipLine.Models.DBObjects;
@@ -71,7 +72,7 @@ namespace ShipLine.Repository
         public void UpdateVoyage(VoyageModel model)
         {
             var dbObject = _DBContext.Voyages.FirstOrDefault(x=> x.VoyageId == model.VoyageId);
-            if(dbObject != null)
+            if (dbObject != null)
             {
                 dbObject.VoyageId = model.VoyageId;
                 dbObject.ShipId = model.ShipId;
