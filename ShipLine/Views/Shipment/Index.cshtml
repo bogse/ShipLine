@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<ShipLine.ViewModel.ShipmentViewModel>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Shipment Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -27,12 +27,6 @@
     <table class="table">
         <thead>
             <tr>
-                @*<th>
-                    @Html.DisplayNameFor(model => model.ShipmentId)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.CustomerId)
-                </th>*@
                 <th>
                     <a asp-action="Index" asp-route-sortOrder="@ViewData["ShipmentNumberSortParam"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">ShipmentNumber</a>
                 </th>
@@ -60,12 +54,6 @@
                 <th>
                     <a asp-action="Index" asp-route-sortOrder="@ViewData["StatusSortParam"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">Status</a>
                 </th>
-                @*<th>
-                    @Html.DisplayNameFor(model => model.DestinationPortId)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.SourcePortId)
-                </th>*@
                 <th></th>
             </tr>
         </thead>
@@ -73,12 +61,6 @@
             @foreach (var item in Model)
             {
                 <tr>
-                    @*<td>
-                        @Html.DisplayFor(modelItem => item.ShipmentId)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.CustomerId)
-                    </td>*@
                     <td>
                         @Html.DisplayFor(modelItem => item.ShipmentNumber)
                     </td>
@@ -106,12 +88,6 @@
                     <td>
                         @Html.DisplayFor(modelItem => item.Status)
                     </td>
-                    @*<td>
-                        @Html.DisplayFor(modelItem => item.DestinationPortId)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.SourcePortId)
-                    </td>*@
 
                     <td>
                         @Html.ActionLink("Edit", "Edit", new {  id=item.ShipmentId  }) |

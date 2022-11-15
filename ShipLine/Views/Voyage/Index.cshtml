@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<ShipLine.ViewModel.VoyageViewModel>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Voyage Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -26,15 +26,6 @@
     <table class="table">
         <thead>
             <tr>
-                @*            <th>
-            @Html.DisplayNameFor(model => model.VoyageId)
-            </th>
-            <th>
-            @Html.DisplayNameFor(model => model.ShipId)
-            </th>
-            <th>
-            @Html.DisplayNameFor(model => model.RouteId)
-            </th>*@
                 <th>
                     <a asp-action="Index" asp-route-sortOrder="@ViewData["VoyageNumberSortParam"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">VoyageNumber</a>
                 </th>
@@ -64,15 +55,6 @@
             @foreach (var item in Model)
             {
                 <tr>
-                    @*<td>
-                        @Html.DisplayFor(modelItem => item.VoyageId)
-                    </td>
-                    <td>
-                    @Html.DisplayFor(modelItem => item.ShipId)
-                    </td>
-                    <td>
-                    @Html.DisplayFor(modelItem => item.RouteId)
-                    </td>*@
                     <td>
                         @Html.DisplayFor(modelItem => item.VoyageNumber)
                     </td>

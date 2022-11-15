@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<ShipLine.ViewModel.RouteViewModel>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Route Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -16,15 +16,6 @@
     <table class="table">
         <thead>
             <tr>
-                @*<th>
-            @Html.DisplayNameFor(model => model.RouteId)
-            </th>*@
-                @*<th>
-            @Html.DisplayNameFor(model => model.SourcePortId)
-            </th>*@
-                @*<th>
-            @Html.DisplayNameFor(model => model.DestinationPortId)
-            </th>*@
                 <th>
                     @Html.DisplayNameFor(model => model.SourcePortName)
                 </th>
@@ -41,15 +32,6 @@
             @foreach (var item in Model)
             {
                 <tr>
-                    @*<td>
-            @Html.DisplayFor(modelItem => item.RouteId)
-            </td>
-            <td>
-            @Html.DisplayFor(modelItem => item.SourcePortId)
-            </td>
-            <td>
-            @Html.DisplayFor(modelItem => item.DestinationPortId)
-            </td>*@
                     <td>
                         @Html.DisplayFor(modelItem => item.SourcePortName)
                     </td>

@@ -1,4 +1,5 @@
-﻿@model ShipLine.ViewModel.VoyageViewModel
+﻿@using ShipLine.ViewModel
+@model ShipLine.ViewModel.VoyageViewModel
 
 @{
     ViewData["Title"] = "DetailsVoyage";
@@ -11,24 +12,6 @@
     <h4>VoyageViewModel</h4>
     <hr />
     <dl class="row">
-@*        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.VoyageId)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.VoyageId)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ShipId)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ShipId)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.RouteId)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.RouteId)
-        </dd>*@
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.VoyageNumber)
         </dt>
@@ -102,26 +85,26 @@
                     </th>
                 </tr>
 
-                @foreach (var item in ViewData["Shipments"] as IList<ShipmentModel>)
+                @foreach (var shipment in ViewData["Shipments"] as IList<ShipmentViewModel>)
                 {
                     <tr>
                         <td>
-                            @item.ShipmentNumber
+                            @shipment.ShipmentNumber
                         </td>
                         <td>
-                            @item.NeedByDate.ToString("MM/dd/yyyy")
+                            @shipment.NeedByDate.ToString("MM/dd/yyyy")
+                        </td>
+                        <td>                            
+                            @shipment.SourcePort
                         </td>
                         <td>
-                            @item.DestinationPortId
+                            @shipment.DestinationPort
                         </td>
                         <td>
-                            @item.SourcePortId
+                            @shipment.CargoContents
                         </td>
                         <td>
-                            @item.CargoContents
-                        </td>
-                        <td>
-                            @item.QuantityTeq
+                            @shipment.QuantityTeq
                         </td>
                     </tr>
                 }

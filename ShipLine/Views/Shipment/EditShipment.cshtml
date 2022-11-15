@@ -15,14 +15,10 @@
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                @*<label asp-for="ShipmentId" class="control-label"></label>*@
                 <input asp-for="ShipmentId" hidden class="form-control" />
-                @*<span asp-validation-for="ShipmentId" class="text-danger"></span>*@
             </div>
             <div class="form-group">
-                @*<label asp-for="ShipmentNumber" class="control-label"></label>*@
                 <input asp-for="ShipmentNumber" hidden class="form-control" />
-                @*<span asp-validation-for="ShipmentNumber" class="text-danger"></span>*@
             </div>
             <div class="form-group">
                 <label asp-for="DestinationPortId" class="control-label">Destination Port</label>

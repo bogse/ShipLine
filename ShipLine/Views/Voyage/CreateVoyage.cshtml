@@ -14,16 +14,6 @@
     <div class="col-md-4">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-@*            <div class="form-group">
-                <label asp-for="VoyageId" class="control-label"></label>
-                <input asp-for="VoyageId" class="form-control" />
-                <span asp-validation-for="VoyageId" class="text-danger"></span>
-            </div>*@
-@*            <div class="form-group">
-                <label asp-for="VoyageNumber" class="control-label"></label>
-                <input asp-for="VoyageNumber" class="form-control" />
-                <span asp-validation-for="VoyageNumber" class="text-danger"></span>
-            </div>*@
             <div class="form-group">
                 <label asp-for="ShipId" class="control-label">Ship Name</label>
                 @Html.DropDownList("ShipId", new SelectList(ViewBag.ShipList, "Value", "Text"), "", new {@class= "form-control"})
@@ -37,23 +27,18 @@
             <div class="form-group">
                 <label asp-for="StartDate" class="control-label"></label>
                 Start Date: 
-                @Html.EditorFor(m => m.StartDate)
-                @Html.ValidationMessageFor(m => m.StartDate)
-                @*<input asp-for="StartDate" class="form-control" />*@
+                @*@Html.EditorFor(m => m.StartDate)
+                @Html.ValidationMessageFor(m => m.StartDate)*@
+                <input asp-for="StartDate" class="form-control" />
                 <span asp-validation-for="StartDate" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="EndDate" class="control-label"></label>
-                End Date: @Html.EditorFor(m => m.EndDate)
-                @Html.ValidationMessageFor(m => m.EndDate)
-                @*<input asp-for="EndDate" class="form-control" />*@
+                @*End Date: @Html.EditorFor(m => m.EndDate)
+                @Html.ValidationMessageFor(m => m.EndDate)*@
+                <input asp-for="EndDate" class="form-control" />
                 <span asp-validation-for="EndDate" class="text-danger"></span>
             </div>
-           @*<div class="form-group">
-                <label asp-for="VoyageQuantity" class="control-label"></label>
-                <input asp-for="VoyageQuantity" class="form-control" />
-                <span asp-validation-for="VoyageQuantity" class="text-danger"></span>
-            </div>*@
             <div class="form-group">
                 <label asp-for="CostPerTeq" class="control-label"></label>
                 <input asp-for="CostPerTeq" class="form-control" />

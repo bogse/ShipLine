@@ -14,16 +14,6 @@
     <div class="col-md-4">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            @*<div class="form-group">
-            <label asp-for="ShipmentId" class="control-label"></label>
-            <input asp-for="ShipmentId" class="form-control" />
-            <span asp-validation-for="ShipmentId" class="text-danger"></span>
-            </div>*@
-            @*<div class="form-group">
-            <label asp-for="ShipmentNumber" class="control-label"></label>
-            <input asp-for="ShipmentNumber" hidden class="form-control" />
-            <span asp-validation-for="ShipmentNumber" class="text-danger"></span>
-            </div>*@
             <div class="form-group">
                 <label asp-for="CustomerId" class="control-label">Customer</label>
                 @Html.DropDownList("CustomerId", new SelectList(ViewBag.ClientList, "Value", "Text"), "", new {@class= "form-control"})

@@ -13,21 +13,11 @@
     <div class="col-md-4">
         <form asp-action="AddShipment">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-@*            <div class="form-group">
-                <label asp-for="VoyageShipmentId" class="control-label"></label>
-                <input asp-for="VoyageShipmentId" class="form-control" />
-                <span asp-validation-for="VoyageShipmentId" class="text-danger"></span>
-            </div>*@
             <div class="form-group">
                 <label asp-for="ShipmentId" class="control-label"></label>
                 @Html.DropDownList("ShipmentId", new SelectList(ViewBag.ShipmentList, "Value", "Text"), "", new {@class= "form-control"})
                 <span asp-validation-for="ShipmentId" class="text-danger"></span>
             </div>
-@*            <div class="form-group">
-                <label asp-for="VoyageId" class="control-label"></label>
-                <input asp-for="VoyageId" class="form-control" />
-                <span asp-validation-for="VoyageId" class="text-danger"></span>
-            </div>*@
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>

@@ -21,6 +21,7 @@ namespace ShipLine.Controllers
         private VoyageShipmentRepository _voyageShipmentRepository;
         private VoyageRepository _voyageRepository;
         private RouteRepository _routeRepository;
+        private ShipRepository _shipRepository;
         public ShipmentController(ApplicationDbContext dbContext)
         {
             _shipmentRepository = new ShipmentRepository(dbContext);
@@ -29,6 +30,7 @@ namespace ShipLine.Controllers
             _voyageShipmentRepository = new VoyageShipmentRepository(dbContext);
             _voyageRepository = new VoyageRepository(dbContext);
             _routeRepository = new RouteRepository(dbContext);
+            _shipRepository = new ShipRepository(dbContext);
         }
         // GET: ShipmentController
         public ActionResult Index(string searchString, string sortOrder, string currentFilter, int? pageNumber)
@@ -108,12 +110,14 @@ namespace ShipLine.Controllers
 
             var shipmentVoyages = _voyageShipmentRepository.GetAllVoyageShipments().Where(x => x.ShipmentId == model.ShipmentId);
             
-            var list = new List<VoyageModel>();
-            foreach (var voyage in shipmentVoyages)
+            var voyageList = new List<VoyageViewModel>();
+            foreach (var shipmentVoyage in shipmentVoyages)
             {
-                list.Add(_voyageRepository.GetVoyageById(voyage.VoyageId));
+                var voyage = _voyageRepository.GetVoyageById(shipmentVoyage.VoyageId);
+                var voyageModel = new VoyageViewModel(voyage, _shipRepository, _routeRepository, _shipmentRepository);
+                voyageList.Add(voyageModel);
             }
-            ViewData["Voyages"] = list;
+            ViewData["Voyages"] = voyageList;
 
             return View("DetailsShipment", viewModel);
         }

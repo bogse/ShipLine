@@ -3,8 +3,10 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using ShipLine.Data;
 using ShipLine.Models;
+using ShipLine.Models.DBObjects;
 using ShipLine.Repository;
 using ShipLine.ViewModel;
 using System.Data;
@@ -20,6 +22,8 @@ namespace ShipLine.Controllers
         private RouteRepository _routeRepository;
         private ShipmentRepository _shipmentRepository;
         private VoyageShipmentRepository _voyageShipmentRepository;
+        private PortRepository _portRepository;
+        private ClientRepository _clientRepository;
 
         public VoyageController(ApplicationDbContext dbContext)
         {
@@ -28,6 +32,8 @@ namespace ShipLine.Controllers
             _routeRepository = new RouteRepository(dbContext);
             _shipmentRepository = new ShipmentRepository(dbContext);
             _voyageShipmentRepository = new VoyageShipmentRepository(dbContext);
+            _portRepository = new PortRepository(dbContext);
+            _clientRepository = new ClientRepository(dbContext);
         }
         // GET: VoyageController
         public ActionResult Index(string searchString, string sortOrder, string currentFilter, int? pageNumber)
@@ -91,12 +97,15 @@ namespace ShipLine.Controllers
 
             var voyageShipments = _voyageShipmentRepository.GetAllVoyageShipments().Where(x => x.VoyageId == model.VoyageId);
 
-            var list = new List<ShipmentModel>();
-            foreach (var shipment in voyageShipments)
+            var shipmentList = new List<ShipmentViewModel>();
+
+            foreach (var voyageShipment in voyageShipments)
             {
-                list.Add(_shipmentRepository.GetShipmentById(shipment.ShipmentId));
+                var shipment = _shipmentRepository.GetShipmentById(voyageShipment.ShipmentId);
+                var shipmentModel = new ShipmentViewModel(shipment, _clientRepository, _portRepository);
+                shipmentList.Add(shipmentModel);  
             }
-            ViewData["Shipments"] = list;
+            ViewData["Shipments"] = shipmentList;
 
             return View("DetailsVoyage", viewModel);
         }
@@ -114,33 +123,7 @@ namespace ShipLine.Controllers
 
             return View("CreateVoyage");
         }
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public async Task<IActionResult> Create(VoyageModel model)
-        //{
-        //    var validationResults = _validator.Validate(model);
-        //    ModelStateDictionary modelState = new ModelStateDictionary();
-        //    if (!validationResults.IsValid)
-        //    { 
-        //        foreach (var error in validationResults.Errors)
-        //        {
-        //            modelState.AddModelError(error.PropertyName, error.ErrorMessage);
-        //        }
 
-        //        return View("CreateVoyage");
-        //    }
-        //    else
-        //    {
-        //        model = new VoyageModel();
-        //        var task = TryUpdateModelAsync(model);
-        //        task.Wait();
-        //        if (task.Result)
-        //        {
-        //            _voyageRepository.InsertVoyage(model);
-        //        }
-        //        return RedirectToAction("Index");
-        //    }
-        //}
         // POST: VoyageController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -158,40 +141,11 @@ namespace ShipLine.Controllers
 
                 return RedirectToAction("Index");
             }
-            catch (Exception ex)
+            catch
             {
-                throw ex;
                 return View("CreateVoyage");
             }
         }
-        //try
-        //{
-        //    var model = new VoyageModel();
-        //    var task = TryUpdateModelAsync(model);
-        //    task.Wait();
-        //    var validationResults = _validator.Validate(model);
-        //    ModelStateDictionary modelState = new ModelStateDictionary();
-        //    if (!validationResults.IsValid)
-        //    {
-        //        foreach (var error in validationResults.Errors)
-        //        {
-        //            modelState.AddModelError(error.PropertyName, error.ErrorMessage);
-        //        }
-
-        //        return View("CreateVoyage");
-        //    }
-        //    if (task.Result)
-        //    {
-        //        _voyageRepository.InsertVoyage(model);
-        //    }
-
-
-        //    return RedirectToAction("Index");
-        //}
-        //catch
-        //{
-        //    return View("CreateVoyage");
-        //}
 
             // GET: VoyageController/Edit/5
         public ActionResult Edit(Guid id)
