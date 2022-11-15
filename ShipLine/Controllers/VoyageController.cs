@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -6,10 +7,12 @@ using ShipLine.Data;
 using ShipLine.Models;
 using ShipLine.Repository;
 using ShipLine.ViewModel;
+using System.Data;
 
 
 namespace ShipLine.Controllers
 {
+    [Authorize(Roles = "User, Admin")]
     public class VoyageController : Controller
     {
         private VoyageRepository _voyageRepository;
