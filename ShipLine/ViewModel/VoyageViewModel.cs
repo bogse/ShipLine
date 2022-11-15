@@ -19,6 +19,8 @@ namespace ShipLine.ViewModel
         [DataType(DataType.Date)]
         public DateTime EndDate { get; set; }
         public int VoyageQuantity { get; set; }
+
+        [DataType(DataType.Currency)]
         public int CostPerTeq { get; set; }
         public int VoyageNumber { get; set; }
         public string ShipName { get; set; }

@@ -15,6 +15,8 @@ namespace ShipLine.ViewModel
         public string SourcePort { get; set; }
         public string ShipRoute { get; set; }
         public string CargoContents { get; set; }
+
+        [DataType(DataType.Currency)]
         public int CostPerTeq { get; set; }
         public int QuantityTeq { get; set; }
         public int VoyageQuantity { get; set; }

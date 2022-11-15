@@ -19,6 +19,8 @@ namespace ShipLine.Models
         [ValidStartEndDate(ErrorMessage = "EndDate must be greater than StartDate")]
         public DateTime EndDate { get; set; }
         public int VoyageQuantity { get; set; }
+
+        [DataType(DataType.Currency)]
         public int CostPerTeq { get; set; }
         public int VoyageNumber { get; set; }
     }
