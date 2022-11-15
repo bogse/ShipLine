@@ -1,4 +1,4 @@
-﻿@model IEnumerable<ShipLine.Models.VoyageShipmentModel>
+﻿@model IEnumerable<ShipLine.ViewModel.VoyageShipmentViewModel>
 
 @{
     ViewData["Title"] = "Index";
@@ -10,49 +10,99 @@
 <p>
     <a asp-action="Create">Create New</a>
 </p>
-
-@if(Model != null)
-{
-    <table class="table">
-        <thead>
-            <tr>
-                @*<th>
-                    @Html.DisplayNameFor(model => model.VoyageShipmentId)
-                </th>*@
-                <th>
-                    @Html.DisplayNameFor(model => model.ShipmentId)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.VoyageId)
-                </th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model)
-            {
-                <tr>
-                    @*<td>
-                        @Html.DisplayFor(modelItem => item.VoyageShipmentId)
-                    </td>*@
-                    <td>
-                        @Html.DisplayFor(modelItem => item.ShipmentId)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.VoyageId)
-                    </td>
-                    <td>
-                        @Html.ActionLink("Edit", "Edit", new {  id=item.VoyageShipmentId  }) |
-                        @Html.ActionLink("Details", "Details", new {  id=item.VoyageShipmentId  }) |
-                        @Html.ActionLink("Delete", "Delete", new {  id=item.VoyageShipmentId  })
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
+<table class="table">
+    <thead>
+        <tr>
+@*            <th>
+                @Html.DisplayNameFor(model => model.VoyageShipmentId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ShipmentId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.VoyageId)
+            </th>*@
+            <th>
+                @Html.DisplayNameFor(model => model.ShipmentNumber)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.VoyageNumber)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DestinationPort)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SourcePort)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ShipRoute)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CargoContents)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.QuantityTeq)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.VoyageQuantity)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.StartDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EndDate)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+@*            <td>
+                @Html.DisplayFor(modelItem => item.VoyageShipmentId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ShipmentId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.VoyageId)
+            </td>*@
+            <td>
+                @Html.DisplayFor(modelItem => item.ShipmentNumber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.VoyageNumber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DestinationPort)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SourcePort)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ShipRoute)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CargoContents)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.QuantityTeq)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.VoyageQuantity)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.StartDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EndDate)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new {  id=item.VoyageShipmentId  }) |
+                    @Html.ActionLink("Details", "Details", new {  id=item.VoyageShipmentId  }) |
+                    @Html.ActionLink("Delete", "Delete", new {  id=item.VoyageShipmentId  })
+            </td>
+        </tr>
 }
-else
-{
-    <p>EmptyModel</p>
-}
-
+    </tbody>
+</table>

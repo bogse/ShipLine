@@ -94,7 +94,6 @@ namespace ShipLine.Repository
                     _DBContext.Shipments.Remove(shipment);
                 }
 
-                
                 _DBContext.Ports.Remove(dbObject);
                 _DBContext.SaveChanges();
             }

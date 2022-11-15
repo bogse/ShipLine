@@ -1,4 +1,4 @@
-﻿@model ShipLine.Models.VoyageShipmentModel
+﻿@model ShipLine.ViewModel.VoyageShipmentViewModel
 
 @{
     ViewData["Title"] = "DeleteVoyageShipment";
@@ -9,7 +9,7 @@
 
 <h3>Are you sure you want to delete this?</h3>
 <div>
-    <h4>VoyageShipmentModel</h4>
+    <h4>VoyageShipmentViewModel</h4>
     <hr />
     <dl class="row">
         @*<dt class = "col-sm-2">
@@ -17,7 +17,7 @@
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.VoyageShipmentId)
-        </dd>*@
+        </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.ShipmentId)
         </dt>
@@ -29,7 +29,67 @@
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.VoyageId)
+        </dd>*@
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.ShipmentNumber)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.ShipmentNumber)
         </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.VoyageNumber)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.VoyageNumber)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.DestinationPort)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.DestinationPort)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.SourcePort)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.SourcePort)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.ShipRoute)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.ShipRoute)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.CargoContents)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.CargoContents)
+        </dd>
+        @*<dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.CostPerTeq)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.CostPerTeq)
+        </dd>*@
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.QuantityTeq)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.QuantityTeq)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.VoyageQuantity)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.VoyageQuantity)
+        </dd>
+        @*<dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.TotalCost)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.TotalCost)
+        </dd>*@
     </dl>
     
     <form asp-action="Delete">

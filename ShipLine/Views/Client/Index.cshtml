@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<ShipLine.Models.ClientModel>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Client Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -15,9 +15,6 @@
     <table class="table">
         <thead>
             <tr>
-                @*<th>
-            @Html.DisplayNameFor(model => model.ClientId)
-            </th>*@
                 <th>
                     @Html.DisplayNameFor(model => model.ClientName)
                 </th>
@@ -34,9 +31,6 @@
             @foreach (var item in Model)
             {
                 <tr>
-                    @*<td>
-            @Html.DisplayFor(modelItem => item.ClientId)
-            </td>*@
                     <td>
                         @Html.DisplayFor(modelItem => item.ClientName)
                     </td>

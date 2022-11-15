@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<ShipLine.ViewModel.ShipmentViewModel>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Shipment Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -11,50 +11,49 @@
     <a asp-action="Create">Create New</a>
 </p>
 
+<form asp-action="Index" method="get">
+    <div class="form-actions no-color">
+        <p>
+            <input type="text" name="SearchString" value="@ViewData["CurrentFilter"]" />
+            <input type="submit" value="Search Client" class="btn btn-default"/> |
+            <a asp-action="Index">Remove Filter</a>
+        </p>
+    </div>
+
+</form>
+
 @if (Model != null)
 {
     <table class="table">
         <thead>
             <tr>
-                @*<th>
-                    @Html.DisplayNameFor(model => model.ShipmentId)
-                </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.CustomerId)
-                </th>*@
-                <th>
-                    @Html.DisplayNameFor(model => model.ShipmentNumber)
+                    <a asp-action="Index" asp-route-sortOrder="@ViewData["ShipmentNumberSortParam"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">ShipmentNumber</a>
                 </th>
                 <th>
                     @Html.DisplayNameFor(model => model.CustomerName)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.DestinationPort)
+                    @Html.DisplayNameFor(model => model.SourcePort)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.SourcePort)
+                    @Html.DisplayNameFor(model => model.DestinationPort)
                 </th>
                 <th>
                     @Html.DisplayNameFor(model => model.CargoContents)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.QuantityTeq)
+                    <a asp-action="Index" asp-route-sortOrder="@ViewData["QuantitySortParam"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">QuantityTeq</a>
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.ShipRequestDate)
+                    <a asp-action="Index" asp-route-sortOrder="@ViewData["ShipRequestDateSortParam"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">ShipRequestDate</a>
+                </th>
+                <th>                    
+                    <a asp-action="Index" asp-route-sortOrder="@ViewData["NeedByDateSortParam"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">NeedByDate</a>
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.NeedByDate)
+                    <a asp-action="Index" asp-route-sortOrder="@ViewData["StatusSortParam"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">Status</a>
                 </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Status)
-                </th>
-                @*<th>
-                    @Html.DisplayNameFor(model => model.DestinationPortId)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.SourcePortId)
-                </th>*@
                 <th></th>
             </tr>
         </thead>
@@ -62,12 +61,6 @@
             @foreach (var item in Model)
             {
                 <tr>
-                    @*<td>
-                        @Html.DisplayFor(modelItem => item.ShipmentId)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.CustomerId)
-                    </td>*@
                     <td>
                         @Html.DisplayFor(modelItem => item.ShipmentNumber)
                     </td>
@@ -75,10 +68,10 @@
                         @Html.DisplayFor(modelItem => item.CustomerName)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.DestinationPort)
+                        @Html.DisplayFor(modelItem => item.SourcePort)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.SourcePort)
+                        @Html.DisplayFor(modelItem => item.DestinationPort)
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.CargoContents)
@@ -95,17 +88,12 @@
                     <td>
                         @Html.DisplayFor(modelItem => item.Status)
                     </td>
-                    @*<td>
-                        @Html.DisplayFor(modelItem => item.DestinationPortId)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.SourcePortId)
-                    </td>*@
 
                     <td>
                         @Html.ActionLink("Edit", "Edit", new {  id=item.ShipmentId  }) |
                         @Html.ActionLink("Details", "Details", new {  id=item.ShipmentId  }) |
-                        @Html.ActionLink("Delete", "Delete", new {  id=item.ShipmentId  })
+                        @Html.ActionLink("Delete", "Delete", new {  id=item.ShipmentId  }) |
+                        @Html.ActionLink("AddToVoyage", "AddToVoyage", new { id=item.ShipmentId})
                     </td>
                 </tr>
             }

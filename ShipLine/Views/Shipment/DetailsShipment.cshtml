@@ -1,4 +1,5 @@
-﻿@model ShipLine.ViewModel.ShipmentViewModel
+﻿@using ShipLine.ViewModel
+@model ShipLine.ViewModel.ShipmentViewModel
 
 @{
     ViewData["Title"] = "DetailsShipment";
@@ -11,18 +12,6 @@
     <h4>ShipmentViewModel</h4>
     <hr />
     <dl class="row">
-        @*<dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ShipmentId)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ShipmentId)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.CustomerId)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.CustomerId)
-        </dd>*@
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.ShipmentNumber)
         </dt>
@@ -77,18 +66,56 @@
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.Status)
         </dd>
-        @*<dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.DestinationPortId)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.DestinationPortId)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.SourcePortId)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.SourcePortId)
-        </dd>*@
+
+        <style>
+            table, th, td {
+                border: 1px solid black;
+            }
+        </style>
+
+        @if (ViewData["Voyages"] != null)
+        {
+            <table>
+                <tr>
+                    <th>
+                        <p>Voyage Number</p>
+                    </th>
+                    <th>
+                        <p>Ship Name</p>
+                    </th>
+                    <th>
+                        <p>Route</p>
+                    </th>
+                    <th>
+                        <p>Start Date</p>
+                    </th>
+                    <th>
+                        <p>End Date</p>
+                    </th>
+                </tr>
+
+                @foreach (var item in ViewData["Voyages"] as IList<VoyageViewModel>)
+                {
+                    <tr>
+                        <td>
+                            @item.VoyageNumber
+                        </td>
+                        <td>
+                            @item.ShipName
+                        </td>
+                        <td>
+                            @item.RouteName
+                        </td>
+                        <td>
+                            @item.StartDate.ToString("MM/dd/yyyy")
+                        </td>
+                        <td>
+                            @item.EndDate.ToString("MM/dd/yyyy")
+                        </td>
+                    </tr>
+                }
+            </table>
+        }
     </dl>
 </div>
 <div>

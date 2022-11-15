@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ShipLine.Data;
 using ShipLine.Models;
@@ -6,6 +7,7 @@ using ShipLine.Repository;
 
 namespace ShipLine.Controllers
 {
+    [Authorize(Roles = "User, Admin")]
     public class ClientController : Controller
     {
         private ClientRepository _clientRepository;

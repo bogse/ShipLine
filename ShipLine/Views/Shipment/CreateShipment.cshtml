@@ -1,4 +1,5 @@
-﻿@model ShipLine.Models.ShipmentModel
+﻿@using ShipLine.Enums
+@model ShipLine.Models.ShipmentModel
 
 @{
     ViewData["Title"] = "CreateShipment";
@@ -13,16 +14,6 @@
     <div class="col-md-4">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            @*<div class="form-group">
-                <label asp-for="ShipmentId" class="control-label"></label>
-                <input asp-for="ShipmentId" class="form-control" />
-                <span asp-validation-for="ShipmentId" class="text-danger"></span>
-            </div>*@
-            @*<div class="form-group">
-                <label asp-for="ShipmentNumber" class="control-label"></label>
-                <input asp-for="ShipmentNumber" hidden class="form-control" />
-                <span asp-validation-for="ShipmentNumber" class="text-danger"></span>
-            </div>*@
             <div class="form-group">
                 <label asp-for="CustomerId" class="control-label">Customer</label>
                 @Html.DropDownList("CustomerId", new SelectList(ViewBag.ClientList, "Value", "Text"), "", new {@class= "form-control"})
@@ -57,13 +48,15 @@
                 <label asp-for="NeedByDate" class="control-label"></label>
                 <input asp-for="NeedByDate" class="form-control" />
                 <span asp-validation-for="NeedByDate" class="text-danger"></span>
-            </div>            
+            </div>
             <div class="form-group">
                 <label asp-for="Status" class="control-label"></label>
-                <input asp-for="Status" class="form-control" />
+                <select asp-for="Status" class="form-control" asp-items="Html.GetEnumSelectList<ShipmentStatusEnum>()">
+                    <option selected="selected" value=""></option>
+                </select>
                 <span asp-validation-for="Status" class="text-danger"></span>
             </div>
-            
+
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
@@ -76,5 +69,7 @@
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    }

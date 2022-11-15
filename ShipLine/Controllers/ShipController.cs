@@ -1,11 +1,14 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ShipLine.Data;
 using ShipLine.Models;
 using ShipLine.Repository;
+using System.Data;
 
 namespace ShipLine.Controllers
 {
+    [Authorize(Roles = "User, Admin")]
     public class ShipController : Controller
     {
         private ShipRepository _shipRepository;

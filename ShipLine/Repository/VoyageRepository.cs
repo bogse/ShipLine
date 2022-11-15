@@ -1,4 +1,6 @@
-﻿using ShipLine.Data;
+﻿using Microsoft.EntityFrameworkCore;
+using ShipLine.CustomValidator;
+using ShipLine.Data;
 using ShipLine.Models;
 using ShipLine.Models.DBObjects;
 
@@ -28,6 +30,7 @@ namespace ShipLine.Repository
                 model.EndDate = dbObject.EndDate;
                 model.VoyageQuantity = dbObject.VoyageQuantity;
                 model.CostPerTeq = dbObject.CostPerTeq;
+                model.VoyageNumber = dbObject.VoyageNumber;
             }
             return model;
         }
@@ -43,6 +46,7 @@ namespace ShipLine.Repository
                 dbObject.EndDate = model.EndDate;
                 dbObject.VoyageQuantity = model.VoyageQuantity;
                 dbObject.CostPerTeq = model.CostPerTeq;
+                dbObject.VoyageNumber = model.VoyageNumber;
             }
             return dbObject;
         }
@@ -68,7 +72,7 @@ namespace ShipLine.Repository
         public void UpdateVoyage(VoyageModel model)
         {
             var dbObject = _DBContext.Voyages.FirstOrDefault(x=> x.VoyageId == model.VoyageId);
-            if(dbObject != null)
+            if (dbObject != null)
             {
                 dbObject.VoyageId = model.VoyageId;
                 dbObject.ShipId = model.ShipId;
@@ -77,6 +81,7 @@ namespace ShipLine.Repository
                 dbObject.EndDate = model.EndDate;
                 dbObject.VoyageQuantity = model.VoyageQuantity;
                 dbObject.CostPerTeq = model.CostPerTeq;
+                dbObject.VoyageNumber = model.VoyageNumber;
                 _DBContext.SaveChanges();
             }
         }

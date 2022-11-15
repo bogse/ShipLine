@@ -1,6 +1,9 @@
+using FluentValidation;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using ShipLine.CustomValidator;
 using ShipLine.Data;
+using ShipLine.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,8 +14,12 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+    .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddControllersWithViews();
+//builder.Services.AddScoped<IValidator<VoyageModel>, VoyageModelValidator>();
+//builder.Services.AddControllersWithViews(opt => opt.ModelValidatorProviders.Add(new CustomModelValidatorProvider()));
+
 
 var app = builder.Build();
 

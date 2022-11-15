@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<ShipLine.ViewModel.VoyageViewModel>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Voyage Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -10,20 +10,25 @@
 <p>
     <a asp-action="Create">Create New</a>
 </p>
+
+<form asp-action="Index" method="get">
+    <div class="form-actions no-color">
+        <p>
+            <input type="text" name="SearchString" value="@ViewData["CurrentFilter"]" />
+            <input type ="submit" value="Search Route" class="btn btn-default"/> |
+            <a asp-action="Index">Remove Filter</a>
+        </p>
+    </div>
+</form>
+
 @if (Model != null)
 {
     <table class="table">
         <thead>
             <tr>
-                @*            <th>
-            @Html.DisplayNameFor(model => model.VoyageId)
-            </th>
-            <th>
-            @Html.DisplayNameFor(model => model.ShipId)
-            </th>
-            <th>
-            @Html.DisplayNameFor(model => model.RouteId)
-            </th>*@
+                <th>
+                    <a asp-action="Index" asp-route-sortOrder="@ViewData["VoyageNumberSortParam"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">VoyageNumber</a>
+                </th>
                 <th>
                     @Html.DisplayNameFor(model => model.ShipName)
                 </th>
@@ -31,10 +36,10 @@
                     @Html.DisplayNameFor(model => model.RouteName)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.StartDate)
+                    <a asp-action="Index" asp-route-sortOrder="@ViewData["StartDateSortParam"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">StartDate</a>
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.EndDate)
+                    <a asp-action="Index" asp-route-sortOrder="@ViewData["EndDateSortParam"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">EndDate</a>
                 </th>
                 <th>
                     @Html.DisplayNameFor(model => model.VoyageQuantity)
@@ -42,6 +47,7 @@
                 <th>
                     @Html.DisplayNameFor(model => model.CostPerTeq)
                 </th>
+
                 <th></th>
             </tr>
         </thead>
@@ -49,15 +55,9 @@
             @foreach (var item in Model)
             {
                 <tr>
-                    @*            <td>
-            @Html.DisplayFor(modelItem => item.VoyageId)
-            </td>
-            <td>
-            @Html.DisplayFor(modelItem => item.ShipId)
-            </td>
-            <td>
-            @Html.DisplayFor(modelItem => item.RouteId)
-            </td>*@
+                    <td>
+                        @Html.DisplayFor(modelItem => item.VoyageNumber)
+                    </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.ShipName)
                     </td>
@@ -80,7 +80,8 @@
                     <td>
                         @Html.ActionLink("Edit", "Edit", new {  id=item.VoyageId  }) |
                         @Html.ActionLink("Details", "Details", new {  id=item.VoyageId  }) |
-                        @Html.ActionLink("Delete", "Delete", new {  id=item.VoyageId  })
+                        @Html.ActionLink("Delete", "Delete", new {  id=item.VoyageId  }) |
+                        @Html.ActionLink("AddShipment", "AddShipment", new { id = item.VoyageId })
                     </td>
                 </tr>
             }

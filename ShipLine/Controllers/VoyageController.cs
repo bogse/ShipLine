@@ -1,32 +1,89 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using ShipLine.Data;
 using ShipLine.Models;
+using ShipLine.Models.DBObjects;
 using ShipLine.Repository;
 using ShipLine.ViewModel;
+using System.Data;
+
 
 namespace ShipLine.Controllers
 {
+    [Authorize(Roles = "User, Admin")]
     public class VoyageController : Controller
     {
         private VoyageRepository _voyageRepository;
         private ShipRepository _shipRepository;
         private RouteRepository _routeRepository;
+        private ShipmentRepository _shipmentRepository;
+        private VoyageShipmentRepository _voyageShipmentRepository;
+        private PortRepository _portRepository;
+        private ClientRepository _clientRepository;
+
         public VoyageController(ApplicationDbContext dbContext)
         {
             _voyageRepository = new VoyageRepository(dbContext);
             _shipRepository = new ShipRepository(dbContext);
             _routeRepository = new RouteRepository(dbContext);
+            _shipmentRepository = new ShipmentRepository(dbContext);
+            _voyageShipmentRepository = new VoyageShipmentRepository(dbContext);
+            _portRepository = new PortRepository(dbContext);
+            _clientRepository = new ClientRepository(dbContext);
         }
         // GET: VoyageController
-        public ActionResult Index()
+        public ActionResult Index(string searchString, string sortOrder, string currentFilter, int? pageNumber)
         {
+            ViewData["VoyageNumberSortParam"] = String.IsNullOrEmpty(sortOrder) ? "VoyageDesc" : "";
+            ViewData["StartDateSortParam"] = sortOrder == "StartDate" ? "StartDateDesc" : "StartDate";
+            ViewData["EndDateSortParam"] = sortOrder == "EndDate" ? "EndDateDesc" : "EndDate";
+            ViewData["CurrentFilter"] = searchString;
+
+            if (searchString != null)
+            {
+                pageNumber = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+
             var list = _voyageRepository.GetAllVoyages();
             var viewModelList = new List<VoyageViewModel>();
             foreach(var voyage in list)
             {
-                viewModelList.Add(new VoyageViewModel(voyage, _shipRepository, _routeRepository));
+                viewModelList.Add(new VoyageViewModel(voyage, _shipRepository, _routeRepository, _shipmentRepository));
+            }
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                viewModelList = viewModelList.Where(s => s.RouteName!.Contains(searchString)).ToList();
+            }
+
+            switch (sortOrder)
+            {
+                case "VoyageDesc":
+                    viewModelList = viewModelList.OrderByDescending(x => x.VoyageNumber).ToList();
+                    break;
+                case "StartDate":
+                    viewModelList = viewModelList.OrderBy(x => x.StartDate).ToList();
+                    break;
+                case "StartDateDesc":
+                    viewModelList = viewModelList.OrderByDescending(x => x.StartDate).ToList();
+                    break;
+                case "EndDate":
+                    viewModelList = viewModelList.OrderBy(x => x.EndDate).ToList();
+                    break;
+                case "EndDateDesc":
+                    viewModelList = viewModelList.OrderByDescending(x => x.EndDate).ToList();
+                    break;
+                default:
+                    viewModelList = viewModelList.OrderBy(x => x.VoyageNumber).ToList();
+                    break;
             }
 
             return View("Index", viewModelList);
@@ -36,7 +93,19 @@ namespace ShipLine.Controllers
         public ActionResult Details(Guid id)
         {
             var model = _voyageRepository.GetVoyageById(id);
-            var viewModel = new VoyageViewModel(model, _shipRepository, _routeRepository);
+            var viewModel = new VoyageViewModel(model, _shipRepository, _routeRepository, _shipmentRepository);
+
+            var voyageShipments = _voyageShipmentRepository.GetAllVoyageShipments().Where(x => x.VoyageId == model.VoyageId);
+
+            var shipmentList = new List<ShipmentViewModel>();
+
+            foreach (var voyageShipment in voyageShipments)
+            {
+                var shipment = _shipmentRepository.GetShipmentById(voyageShipment.ShipmentId);
+                var shipmentModel = new ShipmentViewModel(shipment, _clientRepository, _portRepository);
+                shipmentList.Add(shipmentModel);  
+            }
+            ViewData["Shipments"] = shipmentList;
 
             return View("DetailsVoyage", viewModel);
         }
@@ -69,6 +138,7 @@ namespace ShipLine.Controllers
                 {
                     _voyageRepository.InsertVoyage(model);
                 }
+
                 return RedirectToAction("Index");
             }
             catch
@@ -77,7 +147,7 @@ namespace ShipLine.Controllers
             }
         }
 
-        // GET: VoyageController/Edit/5
+            // GET: VoyageController/Edit/5
         public ActionResult Edit(Guid id)
         {
             var model = _voyageRepository.GetVoyageById(id);
@@ -90,7 +160,7 @@ namespace ShipLine.Controllers
             var routeList = routes.Select(x => new SelectListItem(x.Name, x.RouteId.ToString()));
             ViewBag.RouteList = routeList;
 
-            return View("EditVoyage", model);
+        return View("EditVoyage", model);
         }
 
         // POST: VoyageController/Edit/5
@@ -119,7 +189,7 @@ namespace ShipLine.Controllers
         public ActionResult Delete(Guid id)
         {
             var model = _voyageRepository.GetVoyageById(id);
-            var viewModel = new VoyageViewModel(model, _shipRepository, _routeRepository);
+            var viewModel = new VoyageViewModel(model, _shipRepository, _routeRepository, _shipmentRepository);
 
             return View("DeleteVoyage", viewModel);
         }
@@ -137,6 +207,40 @@ namespace ShipLine.Controllers
             catch
             {
                 return RedirectToAction("Delete", id);
+            }
+        }
+        public ActionResult AddShipment(Guid id)
+        {
+            var model = _voyageRepository.GetVoyageById(id);
+            var route = _routeRepository.GetRouteById(model.RouteId);
+            var shipments = _shipmentRepository.GetAllShipments().Where(x => x.DestinationPortId == route.DestinationPortId && x.SourcePortId == route.SourcePortId
+                            && x.NeedByDate > model.EndDate && model.StartDate > DateTime.Now && x.Status == "InProgress");
+
+            var shipmentList = shipments.Select(x => new SelectListItem(x.ShipmentNumber.ToString(), x.ShipmentId.ToString()));
+            ViewBag.ShipmentList = shipmentList;
+
+            return View("AddShipment");
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult AddShipment(Guid id, IFormCollection collection)
+        {
+            try
+            {
+                var model = new VoyageShipmentModel();
+                model.VoyageId = id;
+                var task = TryUpdateModelAsync(model);
+                task.Wait();
+                if (task.Result)
+                {
+                    _voyageShipmentRepository.InsertVoyageShipment(model);
+                }
+                return RedirectToAction("Index");
+            }
+            catch
+            {
+                return View("AddShipment");
             }
         }
     }

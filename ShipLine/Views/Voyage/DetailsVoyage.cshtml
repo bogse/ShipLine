@@ -1,4 +1,5 @@
-﻿@model ShipLine.ViewModel.VoyageViewModel
+﻿@using ShipLine.ViewModel
+@model ShipLine.ViewModel.VoyageViewModel
 
 @{
     ViewData["Title"] = "DetailsVoyage";
@@ -11,24 +12,12 @@
     <h4>VoyageViewModel</h4>
     <hr />
     <dl class="row">
-@*        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.VoyageId)
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.VoyageNumber)
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.VoyageId)
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.VoyageNumber)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ShipId)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ShipId)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.RouteId)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.RouteId)
-        </dd>*@
         <dt class="col-sm-2">
                 @Html.DisplayNameFor(model => model.ShipName)
         </dt>
@@ -65,6 +54,62 @@
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.CostPerTeq)
         </dd>
+
+        <style>
+            table, th, td {
+                border: 1px solid black;
+            }
+        </style>
+
+        @if (ViewData["Shipments"] != null)
+        {
+            <table>
+                <tr>
+                    <th>
+                        <p>Shipment Number</p>
+                    </th>
+                    <th>
+                        <p>Need By Date</p>
+                    </th>
+                    <th>
+                        <p>Destination Port</p>
+                    </th>
+                    <th>
+                        <p>Source Port</p>
+                    </th>
+                    <th>
+                        <p>Cargo Contents</p>
+                    </th>
+                    <th>
+                        <p>Quantity Teq</p>
+                    </th>
+                </tr>
+
+                @foreach (var shipment in ViewData["Shipments"] as IList<ShipmentViewModel>)
+                {
+                    <tr>
+                        <td>
+                            @shipment.ShipmentNumber
+                        </td>
+                        <td>
+                            @shipment.NeedByDate.ToString("MM/dd/yyyy")
+                        </td>
+                        <td>                            
+                            @shipment.SourcePort
+                        </td>
+                        <td>
+                            @shipment.DestinationPort
+                        </td>
+                        <td>
+                            @shipment.CargoContents
+                        </td>
+                        <td>
+                            @shipment.QuantityTeq
+                        </td>
+                    </tr>
+                }
+            </table>
+        }
     </dl>
 </div>
 <div>
