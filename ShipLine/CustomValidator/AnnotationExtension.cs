@@ -12,6 +12,7 @@ namespace ShipLine.CustomValidator
 
             if (_startDate > _endDate)
             {
+                //need throw?
                 return new ValidationResult
                     ("EndDate cannot be lower than StartDate.");
             }
